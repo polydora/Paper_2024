@@ -31,9 +31,140 @@ video_full <- video[complete.cases(video), ]
 
 complete.cases(video)
 
+names(video_full)
+
+
+
+
+video_full %>% 
+  select(Stattion, N, E,Laminaria) %>% 
+  group_by(Stattion) %>% 
+  summarise(N = mean(N), E = mean(E), Laminaria = mean(Laminaria)) %>% 
+  filter(Laminaria !=0)-> df 
+
 ggplot(data = shore, aes(x = E, y = N)) +
   geom_path(aes( color = depth)) +
-  geom_point(data = video_full, aes(size  = (Filamentous_Algae)))
+  geom_point(data = df, aes(size  = Laminaria)) +
+  ggtitle("Laminaria") +
+  guides(color = "none", size = "none")
+
+video_full %>% 
+  select(Stattion, N, E,Fucus) %>% 
+  group_by(Stattion) %>% 
+  summarise(N = mean(N), E = mean(E), Fucus = mean(Fucus)) %>% 
+  filter(Fucus !=0)-> df
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = df, aes(size  = Fucus)) +
+  ggtitle("Фукусы") +
+  guides(color = "none", size = "none")
+
+video_full %>% 
+  select(Stattion, N, E,Filamentous_Algae) %>% 
+  group_by(Stattion) %>% 
+  summarise(N = mean(N), E = mean(E), Filamentous_Algae = mean(Filamentous_Algae)) %>% 
+  filter(Filamentous_Algae !=0)-> df
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = df, aes(size  = Filamentous_Algae)) +
+  ggtitle("Нитчатые водоросли") +
+  guides(color = "none", size = "none")
+
+
+
+
+
+
+
+
+
+
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = video_full, aes(size  = (Asterias_number))) +
+  ggtitle("Морские звезды") +
+  guides(color = "none", size = "none")
+
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = video_full, aes(size  = (Asterias_in_frame))) +
+  ggtitle("Морские звезды в кадре") +
+  guides(color = "none", size = "none")
+
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = video_full, aes(size  = (Fucus))) +
+  ggtitle("Фукусы") +
+  guides(color = "none", size = "none")
+
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = video_full, aes(size  = (Dead_macoma))) +
+  ggtitle("Мертвые макомы")
+  guides(color = "none", size = "none")
+
+  ggplot(data = shore, aes(x = E, y = N)) +
+    geom_path(aes( color = depth)) +
+    geom_point(data = video_full, aes(size  = (Mytilus))) +
+    ggtitle("Мидии")
+  guides(color = "none", size = "none")
+  
+  ggplot(data = shore, aes(x = E, y = N)) +
+    geom_path(aes( color = depth)) +
+    geom_point(data = video_full, aes(size  = (Polychaeta))) +
+    ggtitle("Полихеты")
+  guides(color = "none", size = "none")
+  
+  ggplot(data = shore, aes(x = E, y = N)) +
+    geom_path(aes( color = depth)) +
+    geom_point(data = video_full, aes(size  = (Laminaria))) +
+    ggtitle("Ламинария")
+  guides(color = "none", size = "none")
+  
+  
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes(color = depth)) +
+  geom_point(data = video_full, aes(size  = (Asterias_number)))
+
+
+
+
+cover<- read_excel("Data/Площади водорослей в рамке.xlsx")
+
+
+
+names(cover)
+
+
+library(dplyr)
+
+cover_mean <-
+cover %>% 
+  group_by(Station) %>% 
+  summarise(E = mean(E), N = mean(N),Filamentous_Algae = mean(Filamentous_Algae),  Laminaria = mean(Laminaria),  Fucus = mean(Fucus))
+  
+
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = cover_mean, aes(size  = (Filamentous_Algae))) +
+  ggtitle(" Площади нитчатых водорослей") +
+  guides(color = "none", size = "none")
+
+
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = cover_mean, aes(size  = (Fucus))) +
+  ggtitle(" Площади фукусов") +
+  guides(color = "none", size = "none")
+
+
+
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( color = depth)) +
+  geom_point(data = cover_mean, aes(size  = (Laminaria))) +
+  ggtitle(" Площади ламинарии") +
+  guides(color = "none", size = "none")
+
 
 
 ggplot(data = video_full, aes(x= Depth , y=Laminaria))+
@@ -48,6 +179,25 @@ ggplot(data = video_full, aes(x= Depth , y=Filamentous_Algae))+
 ggplot(data = video_full, aes(x= Depth , y=Asterias_in_frame))+
   geom_point() +
   geom_smooth(method = "glm", method.args = list(family = "binomial"))
+
+
+row.names(video_full) <- video_full$Replication
+
+
+df <-
+video_full %>%
+  select(Asterias_in_frame, Filamentous_Algae, Laminaria, Dead_macoma, Mytilus, Polychaeta, Fucus) %>% 
+  filter(rowSums(.) !=0)
+  
+
+library(vegan)
+
+
+ord <- metaMDS(df, distance = "jaccard")
+
+plot(ord, display = "species", type = "t")
+plot(ord, display = "sites", type = "t")
+
 
 
 #####################################
