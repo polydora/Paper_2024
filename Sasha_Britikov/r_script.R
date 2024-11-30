@@ -6,6 +6,8 @@ library(clipr)
 
 pelets <- read_excel('Tables/Pelets_2024.xlsx', sheet = "Пеллеты улиток")
 
+pelets_for_grafs <- read_excel('Tables/Pelets_2024.xlsx', sheet = "Пеллеты улиток")
+
 ggplot(pelets, aes( y = Pell, fill = Species)) + geom_boxplot()  +
   facet_grid(Type~ Type_2)
 
@@ -70,3 +72,7 @@ TukeyHSD(Model_caged)
 summary(post_hock)
 
 version
+
+ggplot(pelets_for_grafs, aes(y = Pell, x = Size, fill = Substrate))
++ geom_line()
++ theme_bw()
