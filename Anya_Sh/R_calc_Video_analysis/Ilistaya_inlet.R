@@ -71,6 +71,31 @@ ggplot(data = shore, aes(x = E, y = N)) +
   guides(color = "none", size = "none")
 
 
+############################
+
+cover <- read_excel("Data/Площади водорослей в рамке.xlsx")
+
+cover <-
+merge(cover, video, by = c("Station", "Replication") )
+
+cover %>% 
+  select(Station, Depth, Laminaria.x) %>% 
+  group_by(Station) %>% 
+  summarise(Depth = mean(Depth), Laminaria = mean(Laminaria.x)) -> df 
+
+
+ggplot(data = df, aes(x = Depth, y = Laminaria)) +
+  geom_point() +
+  ggtitle("Laminaria") 
+ 
+
+
+
+
+
+
+
+
 
 
 
