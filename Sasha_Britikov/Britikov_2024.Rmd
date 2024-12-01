@@ -90,3 +90,68 @@ library(bibtex)
 # Обсуждение
 
 # Выводы
+
+```{r}
+library(readxl)
+library(ggplot2)
+library(reshape2)
+library(dplyr)
+library(mgcv)
+library(gratia)
+
+
+lit <- read_excel("Tables/Pelets_2024.xlsx", sheet = "ОБилие литторин на уровнях")
+
+
+
+
+lit$Site <- factor(lit$Site)
+
+names(lit)
+
+lit_long <-
+melt(data = lit, id.vars = c("Date", "Description", "Site", "Sampling_Level", "Real_H", "Sample"), variable.name = "Species", value.name = "N")
+
+
+
+lit_long %>% 
+  group_by(Site, Species, Real_H) %>% 
+  summarise(N = mean(N)) %>% 
+  ggplot(aes(x = Real_H, y = log(N + 1), color = Species)) +
+  geom_point(size = 4) +
+  geom_smooth(se = F)  
+  facet_wrap(~Site)
+
+
+lit %>% 
+  group_by(Site, Real_H) %>% 
+  summarise(Total_N = sum(L.saxatilis + L.obtusata), Prop_Ls = sum(L.saxatilis)/Total_N, Prop_Lo = sum(L.obtusata)/Total_N) %>% 
+  ggplot(aes(x = Real_H, y = Prop_Lo)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = F) +
+  facet_wrap(~Site)
+
+
+
+```
+
+
+
+
+```{r}
+pel <- read_excel("Tables/Pelets_2024.xlsx")
+
+pel %>%  
+  filter(Type == "Wild") %>% 
+  ggplot(aes(x = Substrate, y = Pell, fill = Species)) +
+  geom_boxplot()
+
+pel %>%  
+  filter(Type == "Caged") %>% 
+  ggplot(aes(x = Substrate, y = Pell, fill = Species)) +
+  geom_boxplot()
+
+
+```
+
+
