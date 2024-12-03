@@ -110,6 +110,7 @@ library(waver)
 fetch <- fetch_len_multi(pts = fetch_locs, bearings = c(0, 45, 90, 135, 180, 225, 270, 215), shoreline = Kand_shape,  dmax = 100000, spread = 0,  method = "btree", projected = FALSE)
 
 
+
 fetch <- 
   cbind(points, fetch ) 
 
