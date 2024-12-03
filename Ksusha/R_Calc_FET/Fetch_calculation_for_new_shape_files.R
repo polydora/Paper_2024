@@ -20,7 +20,6 @@ library(maptools) # Rgshhs
 library(PBSmapping)
 library(gridExtra)
 library(grid)
-library(gamm4)
 
 library(akima)
 library(car)
