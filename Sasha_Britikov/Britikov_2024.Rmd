@@ -20,6 +20,9 @@ library(dplyr)
 library(broom)
 library(clipr)
 library(bibtex)
+library(reshape2)
+library(mgcv)
+library(gratia)
 ```
 
 # Эколого-биологический центр “Крестовский остров”
@@ -92,14 +95,6 @@ library(bibtex)
 # Выводы
 
 ```{r}
-library(readxl)
-library(ggplot2)
-library(reshape2)
-library(dplyr)
-library(mgcv)
-library(gratia)
-
-
 lit <- read_excel("Tables/Pelets_2024.xlsx", sheet = "ОБилие литторин на уровнях")
 
 
