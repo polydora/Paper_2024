@@ -84,7 +84,6 @@ draw(Mod_Dens)
 #####################
 
 
-
 myt %>% 
   filter(Site %in% c(8,9)) %>% 
   ggplot(aes(x = Fucoid, y = Dens_E, fill = Site)) +
