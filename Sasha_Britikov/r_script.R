@@ -11,21 +11,20 @@ pelets <- read_excel('Tables/Pelets_2024.xlsx', sheet = "Пеллеты улит
 pelets_for_grafs <- read_excel('Tables/Pelets_2024.xlsx', sheet = "Пеллеты улиток")
 
 ggplot(pelets, aes( y = Pell, fill = Species)) + geom_boxplot()  +
-  facet_grid(Type~ Type_2)
-
+  facet_grid(Type~ Substrate)
 
 pelets %>%
   filter(Type == "Caged") %>%
   ggplot(., aes(x = Size, y = Pell, color = Species)) +
   geom_point() +
   geom_smooth(method = "lm") +
-  facet_wrap(~Type_2)
+  facet_wrap(~Substrate)
 
 pelets %>%
   filter(Type == "Caged") %>%
   ggplot(., aes(x = Species, y = Pell, fill = Species)) +
   geom_boxplot()  +
-  facet_wrap(~Type_2)
+  facet_wrap(~Substrate)
 
 pelets %>%
   filter(Type == "Caged") -> df
@@ -61,10 +60,11 @@ plot(Model_caged_prop)
 hist(residuals(Model_caged_prop))
 
 
-Model_caged <- aov(log(Pell +1) ~ Type_2*Species, data = df)
+Model_caged <- aov(log(Pell +1) ~ Substrate*Species, data = df)
 summary(Model_caged)
 
 plot(Model_caged)
+
 
 hist(residuals(Model_caged))
 
@@ -75,6 +75,23 @@ summary(post_hock)
 
 version
 
-ggplot(pelets_for_grafs, aes(y = Pell, x = Size, fill = Substrate))
-+ geom_line()
-+ theme_bw()
+# ggplot(pelets_for_grafs, aes(y = Pell, x = Size, fill = Substrate))
+# + geom_line()
+# + theme_bw()
+
+pelets %>%
+  filter(Species == "Obt") %>%
+  ggplot(., aes(x = Size, y = Pell, colour = Substrate)) +
+  geom_point() +
+  geom_smooth()
+
+snailsseparationsondiflevel <- read_excel('Tables/Pelets_2024.xlsx', sheet = "ОБилие литторин на уровнях")
+
+
+
+
+ggplot(snailsseparationsondiflevel, aes(x = Sampling_Level)) +
+  geom_bar() +
+  scale_fill_hue(c = 40) +
+  facet_wrap(~ Site)
+
