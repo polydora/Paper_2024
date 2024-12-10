@@ -4,6 +4,8 @@ library(dplyr)
 library(broom)
 library(clipr)
 
+
+
 pelets <- read_excel('Tables/Pelets_2024.xlsx', sheet = "Пеллеты улиток")
 
 pelets_for_grafs <- read_excel('Tables/Pelets_2024.xlsx', sheet = "Пеллеты улиток")
