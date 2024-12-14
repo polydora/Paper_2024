@@ -158,7 +158,7 @@ pel %>%
   ggplot(aes(x = Substrate, y = Pell, fill = Species)) +
   geom_boxplot()
 
-
+summary(pel)
 ```
 
 
