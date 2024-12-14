@@ -129,16 +129,17 @@ lit_long %>%
   facet_wrap(~Site)
 
 
-lit %>% 
-  group_by(Site, Real_H) %>% 
-  summarise(Total_N = sum(L.saxatilis + L.obtusata), Prop_Ls = sum(L.saxatilis)/Total_N, Prop_Lo = sum(L.obtusata)/Total_N) %>% 
-  ggplot(aes(x = Real_H, y = Prop_Lo)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = F) +
-  facet_wrap(~Site)
+library(mgcv)
+library(gratia)  
 
+Mod <- gam(log(N+1) ~ s(Real_H, bs = "cr", by = Species, k = 7) + Species, data = lit_long)
+  
+summary(Mod)
 
+appraise(Mod)  
+draw(Mod)
 
+  
 ```
 
 
