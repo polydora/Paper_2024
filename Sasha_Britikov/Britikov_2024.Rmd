@@ -133,15 +133,39 @@ library(mgcv)
 library(gratia)  
 
 Mod <- gam(log(N+1) ~ s(Real_H, bs = "cr", by = Species, k = 7) + Species, data = lit_long)
-  
-summary(Mod)
 
-appraise(Mod)  
-draw(Mod)
+# Mod <- gam(N ~ s(Real_H, bs = "cr", by = Species, k = 7) + Species, family = "nb", data = lit_long)
+
 
   
+# summary(Mod)
+# 
+# appraise(Mod)  
+
+Pl_Ls <-
+draw(Mod, residuals = T, select = 1) +
+  geom_vline(xintercept = 189,4) +
+  theme_bw()
+
+Pl_Lo <-
+draw(Mod, residuals = T, select = 2) +
+  geom_vline(xintercept = 189,4) +
+  theme_bw()
+
+
+
+
 ```
 
+
+
+
+```{r}
+library(cowplot)
+
+plot_grid(Pl_Ls, Pl_Lo)
+
+```
 
 
 
@@ -158,7 +182,33 @@ pel %>%
   ggplot(aes(x = Substrate, y = Pell, fill = Species)) +
   geom_boxplot()
 
-summary(pel)
+
+pel %>%  
+  filter(Type == "Caged") -> pel_caged
+
+
+library(lme4)
+
+Mod_pel <- glmer.nb(Pell ~ Species * Substrate + (1|Experiment),  data = pel_caged)
+
+plot(Mod_pel)
+
+summary(Mod_pel)
+
+library(performance)
+
+
+overdisp_fun <- function(model) {
+rdf <- df.residual(model)
+rp <- residuals(model,type="pearson")
+Pearson.chisq <- sum(rp^2)
+prat <- Pearson.chisq/rdf
+pval <- pchisq(Pearson.chisq, df=rdf, lower.tail=FALSE)
+c(chisq=Pearson.chisq,ratio=prat,rdf=rdf,p=pval)
+}
+
+overdisp_fun(Mod_pel)
+
 ```
 
 
