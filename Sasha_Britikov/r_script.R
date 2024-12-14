@@ -79,18 +79,44 @@ version
 # + geom_line()
 # + theme_bw()
 
-pelets %>%
-  filter(Species == "Obt") %>%
-  ggplot(., aes(x = Size, y = Pell, colour = Substrate)) +
-  geom_point() +
-  geom_smooth()
 
 snailsseparationsondiflevel <- read_excel('Tables/Pelets_2024.xlsx', sheet = "ОБилие литторин на уровнях")
 
 
 
+snailsseparationsondiflevel<-
+snailsseparationsondiflevel %>%
+  mutate(ratio =  L.saxatilis/( L.saxatilis + L.obtusata))
 
-ggplot(snailsseparationsondiflevel, aes(x = Sampling_Level)) +
+
+
+ggplot(snailsseparationsondiflevel, aes(x = Real_H, y = ratio )) +
+  geom_point() +
+  facet_wrap(~Site, nrow = 2)
+
+
+
+library(reshape2)
+
+df <-
+snailsseparationsondiflevel %>%
+  select(-ratio) %>%
+  melt(., id.vars = c("Date", "Description", "Site", "Sampling_Level", "Real_H", "Sample")) %>%
+  group_by(Site, Real_H, variable) %>%
+  summarise(mean_N = mean(value))
+
+
+
+
+ggplot(df, aes(x = Real_H, y = log(mean_N + 1) )) +
+  geom_point() +
+  geom_line() +
+  facet_grid(variable~Site)
+
+
+
+
+`ggplot(snailsseparationsondiflevel, aes(x = Sampling_Level)) +
   geom_bar() +
   scale_fill_hue(c = 40) +
   facet_wrap(~ Site)
