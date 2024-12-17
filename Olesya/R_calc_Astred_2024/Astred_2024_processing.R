@@ -96,3 +96,16 @@ simulateResiduals(Mod_B, plot = T)
 summary(Mod_B)
 
 
+# Mod_all <- gamm(Out ~ s(Prop_T, bs = "cs", k = 5) + Morphotype + s(Size), random = list(Cage_ID_2 = ~ 1), data = individual_fate, family = binomial(link = "logit"))
+
+Mod_all1 <- gam(Out ~ s(Prop_T, bs = "cs", k = 5)  + s(Size), data = individual_fate, family = binomial(link = "logit"))
+
+summary(Mod_all1)
+
+# 
+# 
+# Mod_all2 <- gam(Out ~ s(Prop_T, bs = "cs", k = 5) + Morphotype + s(Size), data = individual_fate, family = binomial(link = "logit"))
+# 
+# AIC(Mod_all1, Mod_all2)
+
+draw(Mod_all1)

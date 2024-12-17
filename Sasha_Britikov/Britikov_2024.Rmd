@@ -172,6 +172,8 @@ plot_grid(Pl_Ls, Pl_Lo)
 ```{r}
 pel <- read_excel("Tables/Pelets_2024.xlsx")
 
+summary(pel)
+
 pel %>%  
   filter(Type == "Wild") %>% 
   ggplot(aes(x = Substrate, y = Pell, fill = Species)) +
@@ -195,8 +197,6 @@ plot(Mod_pel)
 
 summary(Mod_pel)
 
-library(performance)
-
 
 overdisp_fun <- function(model) {
 rdf <- df.residual(model)
@@ -208,6 +208,21 @@ c(chisq=Pearson.chisq,ratio=prat,rdf=rdf,p=pval)
 }
 
 overdisp_fun(Mod_pel)
+
+
+My_data <- expand.grid(Species = c("Obt", "Sax"), Substrate = c("Fucales", "Stone"))
+
+predicted <- predict(Mod_pel, newdata = My_data, re.form = NA)
+
+My_data$Fit = exp(predicted)
+
+ggplot(My_data, aes(x = Substrate, y = Fit, fill = Species)) +
+  geom_col() +
+  facet_wrap(~Species)
+
+
+ggplot(pel, aes(x = Substrate, y = Pell, fill = Species)) + 
+  geom_boxplot()
 
 ```
 
