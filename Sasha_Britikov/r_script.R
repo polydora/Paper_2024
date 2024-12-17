@@ -3,8 +3,11 @@ library(ggplot2)
 library(dplyr)
 library(broom)
 library(clipr)
+library(installr)
 
+updateR()
 
+version
 
 pelets <- read_excel('Tables/Pelets_2024.xlsx', sheet = "Пеллеты улиток")
 
