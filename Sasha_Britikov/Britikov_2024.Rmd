@@ -14,7 +14,6 @@ options(knitr.kable.NA = '')
 
 
 ```{r packages}
-
 library(readxl)
 library(ggplot2)
 library(dplyr)
@@ -27,7 +26,6 @@ library(gratia)
 library(lme4)
 library(performance)
 library(cowplot)
-
 ```
 
 # Эколого-биологический центр “Крестовский остров”
@@ -48,7 +46,7 @@ library(cowplot)
 
 # А. Бритиков
 
-# Разделение каких экологических ниш Littorina saxatilis и L. obtusata мы наблюдаем на литоррали Белого моря?
+# Разделение каких экологических ниш Littorina saxatilis и L. obtusata мы наблюдаем на литорали Белого моря?
 
 &nbsp; 
 
@@ -63,14 +61,9 @@ library(cowplot)
 
   Экологическая ниша - это многомерное пространство, формируемое условиями и ресурсами, которые обеспечивают существование видов, влияя на то, как виды сосуществуют и разделяются, используя различные ресурсы и условия окружающей среды для снижения конкуренции (@reyes2024all). Дифференциация на специфические ниши включает пространственную, трофическую, временную и/или их комбинацию (@guo2012separation).
   
-  Адаптивная диверсификация сложных признаков играет ключевую роль в эволюции разнообразия организмов. У пресноводных улиток рода Tylomelania адаптивные радикации, вероятно, способствовала трофическая специализация через диверсификацию их ключевого кормового органа - радулы (@hilgers2022evolutionary). 
+  Адаптивная диверсификация сложных признаков играет ключевую роль в эволюции разнообразия организмов. У пресноводных улиток рода Tylomelania адаптивные радикации, вероятно, способствовала трофическая специализация через диверсификацию их ключевого кормового органа - радулы (@hilgers2022evolutionary).  Так в работе Гуо @guo2012separation, было показано, на примере бычков *Rhinogobius cliffordpopei* и *Rhinogobius giurius*, разделение экологических ниш двумя схожими вида в пространстве, времени и пищевых объектах.
   
-$ В исследование Гуо места обитания, особенности жизненного цикла, состав пищи и кормовое поведение двух видов.
-и кормовое поведение двух инвазивных видов гобиид,
-и экологически сходных (Rhinogobius cliffordpopei и Rhinogobius giurius).
-Rhinogobius giurinus), сравниваются, чтобы проверить, является ли разделение ниш
-потенциально может обеспечить их стабильное сосуществование в озере Эрхай (мелководное озеро). $
-  
+  В данном исследование изучалось разделение экологических ниш между двумя вида моллюсков: *L.saxatilis* и *L.obtusata*. Целью этой работы было определить разделение каких экологических ниш Littorina saxatilis и L. obtusata мы наблюдаем на литорали Белого моря. В задачи исследования входило: определить, как в зависимости от высоты меняется процентное соотношение этих двух видов моллюсков и какие могут быть причины такого разделения экологических ниш.
 
 # Материалы и методика
 
@@ -186,11 +179,18 @@ pel %>%
   filter(Type == "Caged") -> pel_caged
 
 
+pel_caged$Experiment <- factor(pel_caged$Experiment)
+pel_caged$Species <- factor(pel_caged$Species)
+pel_caged$Substrate <- factor(pel_caged$Substrate)
+
 
 
 Mod_pel <- glmer.nb(Pell ~ Species * Substrate + (1|Experiment),  data = pel_caged)
 
-plot(Mod_pel)
+Mod_pel <- gam(Pell ~ s(Size, by = Species) + Species * Substrate + s(Experiment, bs = "re"), family = "nb", method = "REML", data = pel_caged)
+
+
+appraise(Mod_pel)
 
 summary(Mod_pel)
 
@@ -210,4 +210,26 @@ overdisp_fun(Mod_pel)
 
 ```
 
+
+
+```{r}
+My_data <- expand.grid(Species = unique(pel_caged$Species), Substrate = unique(pel_caged$Substrate))
+
+draw(Mod_pel, parametric = T)
+
+predicted <- predict(Mod_pel, newdata = My_data, exclude = "s(Experiment)",newdata.guaranteed = T, se.fit = T, type = "response")
+  
+  
+My_data$Fit <- predicted$fit
+
+My_data$Lwr <-  (predicted$fit - 1.96*predicted$se.fit)
+
+My_data$Upr <-  (predicted$fit + 1.96*predicted$se.fit)
+
+ggplot(My_data, aes(x = Substrate, y = Fit)) +
+  geom_col() +
+  facet_wrap(~Species) +
+  geom_errorbar(aes(ymin = Lwr, ymax = Upr))
+
+```
 
