@@ -20,7 +20,6 @@ library(maptools) # Rgshhs
 library(PBSmapping)
 library(gridExtra)
 library(grid)
-library(gamm4)
 
 library(akima)
 library(car)
@@ -128,6 +127,7 @@ fetch_locs = SpatialPoints(fetch.df[, 1:2], CRS(proj4string(murm_shape)))
 library(waver)
 
 fetch <- fetch_len_multi(pts = fetch_locs, bearings = c(0, 45, 90, 135, 180, 225, 270, 215), shoreline = Kand_shape,  dmax = 100000, spread = 0,  method = "btree", projected = FALSE)
+
 
 
 fetch <- 
