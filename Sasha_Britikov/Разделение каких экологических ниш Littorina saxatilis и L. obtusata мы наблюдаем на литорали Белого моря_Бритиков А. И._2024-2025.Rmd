@@ -92,42 +92,39 @@ library(multcomp)
 ## Статистическая обработка
 
   В качестве зависимой переменной в статистическом анализе мы использовали количество пеллет выделенных моллюсками (Pell). +++ На основе дисперсионного анализа полученных моделей принималось решение о статистической значимости влияния того или иного фактора. В качестве порогового значения для отвержения нулевой гипотезы использовался уровень значимости α=0,05. Все расчеты проводились с использованием функций языка статистического программирования R 4.4.2 (R Core Team, 2024).
+  
+# Результаты
+
+  Рисунок
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r}
 lit <- read_excel("Tables/Pelets_2024.xlsx", sheet = "ОБилие литторин на уровнях")
 
-
-
-
 lit$Site <- factor(lit$Site)
-
-names(lit)
 
 lit_long <-
 melt(data = lit, id.vars = c("Date", "Description", "Site", "Sampling_Level", "Real_H", "Sample"), variable.name = "Species", value.name = "N")
-
-
 
 lit_long %>% 
   group_by(Site, Species, Real_H) %>% 
   summarise(N = mean(N)) %>% 
   ggplot(aes(x = Real_H, y = log(N + 1), color = Species)) +
   geom_point(size = 4) +
-  geom_smooth(se = F)  
-  facet_wrap(~Site)
-
-
-  
+  geom_smooth(se = F) +  
+  labs(x = "Высота над нульом глубин", color = "Вид", y = "Колличество пеллет (логорифма)")
 
 Mod <- gam(log(N+1) ~ s(Real_H, bs = "cr", by = Species, k = 7) + Species, data = lit_long)
-
-# Mod <- gam(N ~ s(Real_H, bs = "cr", by = Species, k = 7) + Species, family = "nb", data = lit_long)
-
-
-  
-# summary(Mod)
-# 
-# appraise(Mod)  
 
 Pl_Ls <-
 draw(Mod, residuals = T, select = 1) +
@@ -139,35 +136,21 @@ draw(Mod, residuals = T, select = 2) +
   geom_vline(xintercept = 189,4) +
   theme_bw()
 
+# plot_grid(Pl_Ls, Pl_Lo)
 
-
-
-```
-
-
-
-
-```{r}
-
-plot_grid(Pl_Ls, Pl_Lo)
-
-```
-
-
-
-```{r}
 pel <- read_excel("Tables/Pelets_2024.xlsx")
 
 pel %>%  
   filter(Type == "Wild") %>% 
   ggplot(aes(x = Substrate, y = Pell, fill = Species)) +
-  geom_boxplot()
+  geom_boxplot() + 
+  labs(x = "Субстрат", color = "Вид", y = "Колличество пеллет")
 
 pel %>%  
   filter(Type == "Caged") %>% 
   ggplot(aes(x = Substrate, y = Pell, fill = Species)) +
-  geom_boxplot()
-
+  geom_boxplot() + 
+  labs(x = "Субстрат", color = "Вид", y = "Колличество пеллет")
 
 pel %>%  
   filter(Type == "Caged") -> pel_caged
@@ -177,20 +160,9 @@ pel_caged$Experiment <- factor(pel_caged$Experiment)
 pel_caged$Species <- factor(pel_caged$Species)
 pel_caged$Substrate <- factor(pel_caged$Substrate)
 
-
-
 Mod_pel <- glmer.nb(Pell ~ Species * Substrate + (1|Experiment),  data = pel_caged)
 
 Mod_pel <- lme(log(Pell+1) ~ Species * Substrate, random =  ~ 1|Experiment,  data = pel_caged)
-
-summary(Mod_pel)
-
-
-# Mod_pel2 <- gam(Pell ~ Species * Substrate + s(Experiment, bs = "re"), family = "nb",  data = pel_caged)
-
-
-
-library(multcomp)
 
 pel_caged$Interact <- interaction(pel_caged$Species, pel_caged$Substrate)
 
@@ -198,41 +170,7 @@ Mod_interact <- lme(log(Pell+1) ~ -1 + Interact, random = ~ 1|Experiment,  data 
 
 tukey_compar <- summary(glht(Mod_interact,linfct =  mcp(Interact = "Tukey")))
 
-
-
-
-# Mod_pel <- gam(Pell ~ s(Size, by = Species) + Species * Substrate + s(Experiment, bs = "re"), family = "nb", method = "REML", data = pel_caged)
-
-
-# appraise(Mod_pel)
-# 
-# summary(Mod_pel)
-
-
-
-
-# overdisp_fun <- function(model) {
-# rdf <- df.residual(model)
-# rp <- residuals(model,type="pearson")
-# Pearson.chisq <- sum(rp^2)
-# prat <- Pearson.chisq/rdf
-# pval <- pchisq(Pearson.chisq, df=rdf, lower.tail=FALSE)
-# c(chisq=Pearson.chisq,ratio=prat,rdf=rdf,p=pval)
-# }
-
-# overdisp_fun(Mod_pel)
-
-```
-
-
-
-```{r}
 My_data <- expand.grid(Species = unique(pel_caged$Species), Substrate = unique(pel_caged$Substrate))
-
-# draw(Mod_pel, parametric = T)
-
-# predicted <- predict(Mod_pel2, newdata = My_data, exclude = "s(Experiment)",newdata.guaranteed = T, se.fit = T, type = "response")
-  
 
 predicted <- predict(Mod_pel, newdata = My_data, level = 0)
 
@@ -247,7 +185,7 @@ My_data$Lwr <-  exp(predicted - 1.96*SE) - 1
 My_data$Upr <-  exp(predicted + 1.96*SE) -1
 
 
-library(ggsignif)
+
 
 
 
@@ -257,10 +195,6 @@ ggplot(My_data, aes(x = Substrate, y = Fit, fill = Species)) +
   geom_signif(y_position = c(21, 21), xmin = 0.75, xmax = 1.25, annotations = "p<0.001", tip_length = 0) +
   geom_signif(y_position = c(23, 23), xmin = 0.75, xmax = 1.75, annotations = "p = 0.003", tip_length = 0) +
   geom_signif(y_position = c(25, 25), xmin = 0.75, xmax = 2.25, annotations = "p = 0.004", tip_length = 0)
-
-# +
-#   facet_wrap(~Species) 
-
 ```
 
 
@@ -268,7 +202,7 @@ ggplot(My_data, aes(x = Substrate, y = Fit, fill = Species)) +
 
 
 
-# Результаты
+
 
 # Обсуждение
 
