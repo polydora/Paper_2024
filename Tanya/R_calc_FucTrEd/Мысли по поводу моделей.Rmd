@@ -1,0 +1,233 @@
+---
+title: "Еще раз про модели"
+author: "В. М. Хайтов"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Таня, привет!
+Вот я свел воедино то, что получается. Надо еще раз все критически осмыслить.
+
+1. Мы вводим дискретные градации плотности.
+
+2. Мы смотрим на зависимость от Prop_T вероятности оказаться на водорослях.
+
+3. И все-таки я предлагаю поработать с величиной Diff = Prop_T_Algae - Prop_T_Bottom
+
+4. Мы рассматриваем вероятность гибели в зависимаости от Prop_T.
+
+Вот что получается
+
+```{r}
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(broom)
+
+library(mgcv)
+library(gratia)
+
+
+myt <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист2')
+
+myt <- 
+  myt %>% 
+  filter(Open == "закрытый")
+
+myt <-
+  myt %>% 
+  mutate(N_total = T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot + E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
+         NT = T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot, 
+         NE = E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
+         Prop_T = NT/(NT + NE))
+
+
+myt <-
+  myt %>% 
+  mutate(N_Algae = T_a_Asc + T_a_Fuc + T_dead_Asc + T_dead_Fuc + E_a_Asc + E_a_Fuc + E_dead_Asc + E_dead_Fuc,
+         N_Bottom = T_a_bot + T_dead_bot + E_a_bot + E_dead_bot,
+         N_Algae_alive = T_a_Asc + T_a_Fuc + E_a_Asc + E_a_Fuc,
+         N_Bottom_alive = T_a_bot + E_a_bot,
+         B_Algae = weight_Fuc + weight_Asc)
+
+
+
+```
+
+
+
+## 1. Мы вводим дискретные градации плотности.
+
+
+```{r}
+myt <- 
+myt %>% 
+  mutate(Density = factor(case_when(N_total <= 20 ~ "Low",
+                             N_total > 20 & N_total < 60 ~ "Medium",
+                             N_total >= 60 ~ "Nigh" )))
+
+```
+
+
+
+## 2. Мы смотрим на зависимость от Prop_T вероятности оказаться на водорослях.
+
+```{r}
+
+mod_alive <- gam(cbind(N_Algae_alive, N_Bottom_alive) ~ s(Prop_T, by = Density, k = 5) + Density  + s(B_Algae, by = Density, k = 5) , data = myt, family = "binomial", method = "REML")
+
+```
+
+Тестируем модель на валидность
+
+```{r}
+
+appraise(mod_alive)
+
+library(DHARMa)
+
+simulateResiduals(mod_alive, plot = T)
+```
+
+Проблем не вижу
+
+```{r}
+summary(mod_alive)
+```
+
+
+Вот ее визуализация
+
+```{r}
+draw(mod_alive)
+```
+
+Потом картинку облагородим. Но суть понятна. 
+
+## 3. И все-таки я предлагаю поработать с величиной Diff = Prop_T_Algae - Prop_T_Bottom
+
+```{r}
+myt <- 
+  myt %>% 
+  mutate(Prop_T_Algae = (T_a_Asc + T_a_Fuc)/(T_a_Asc + T_a_Fuc + E_a_Asc + E_a_Fuc),
+         Prop_T_Bottom = (T_a_bot + T_a_bot)/(T_a_bot + T_a_bot + E_a_bot + E_a_bot)
+         )
+
+myt2 <-
+myt %>% 
+  select(ID, Density, B_Algae, Prop_T, Prop_T_Algae, Prop_T_Bottom) %>% 
+  filter(complete.cases(.)) %>% 
+  rename(Algae = Prop_T_Algae, Bottom = Prop_T_Bottom) %>% 
+  mutate(Diff = (Algae - Bottom) )
+
+```
+
+
+```{r}
+
+mod_diff <- gam(Diff ~ s(Prop_T, by = Density, bs = "cr", k = 3) + Density + s(B_Algae, by = Density), data = myt2) 
+
+```
+
+
+Диагностика модели
+```{r}
+simulateResiduals(mod_diff, plot = T)
+```
+
+Не супер... Но можно обсуждать.
+
+
+```{r}
+summary(mod_diff)
+
+```
+
+Выявляются две значимые зависимости. 
+
+Вот визуализация
+```{r}
+draw(mod_diff)
+```
+
+Связь с B_Algae нас не очень интересует, это просто поправочная ковариата. А вот связь с Prop_T очень понятная, кажется. Думаем.
+
+
+4. Мы рассматриваем вероятность гибели в зависимаости от Prop_T.
+
+```{r}
+
+myt_status <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист3')
+
+library(tidyr)
+myt_status %>% 
+  filter(Type == "ET") %>% 
+  pivot_longer(cols = -c(ID, Location, Status, Morphotype, Type)  ) %>%
+  uncount(value)  %>%
+  as_tibble ->
+  myt_outcome
+
+myt_outcome %>%
+  mutate(Out = ifelse(Status == "мертвые", 1, 0),
+         Substrate = ifelse(Location == "Грунт", "Bottom", "Algae")) ->
+  myt_outcome
+
+
+df <- 
+  myt %>% 
+  select(ID, Density, Prop_T, B_Algae)
+
+myt_outcome <- 
+merge(myt_outcome, df)
+
+
+myt_outcome %>% 
+  group_by(Density, Substrate) %>% 
+  summarise(N_T = sum(Morphotype == "T"),
+            N_E = sum(Morphotype == "E")) %>% 
+  mutate(Prop_T = N_T/(N_T + N_E))
+
+
+myt_substr <- 
+myt_outcome %>% 
+  group_by(Density, Substrate, Morphotype) %>% 
+  summarise(N = n())
+
+```
+
+
+
+```{r}
+Mod_deadness <- gam(Out ~ s(Prop_T, by = Density ) + Density + Morphotype +  + s(B_Algae, by = Density) , family = "binomial", data = myt_outcome, method = "REML")
+
+```
+
+Диагностика валидности
+
+```{r}
+simulateResiduals(Mod_deadness, plot = T)
+```
+
+Супер!
+
+Вот результаты
+
+```{r}
+summary(Mod_deadness)
+```
+
+У T-морфотипа смертность выше.
+
+Вот визуализация зависимостей, описанных смузерами. 
+
+```{r}
+draw(Mod_deadness)
+```
+
+Чем больше Prop_T при высокой плотности тем ниже смертность... Хм... Есть идеи почему такое может быть?
+

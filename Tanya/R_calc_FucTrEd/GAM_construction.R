@@ -45,7 +45,7 @@ myt <-
 library(mgcv)
 library(gratia)
 
-mod <- gam(cbind(N_Algae, N_Bottom) ~ s(Prop_T, by = Density, k = 5) + Density  + s(B_Algae), data = myt, family = "binomial", method = "REML")
+mod <- gam(cbind(N_Algae, N_Bottom) ~ s(Prop_T, by = Density, k = 5) + Density  + s(B_Algae, by = Density, k = 5), data = myt, family = "binomial", method = "REML")
 
 summary(mod)
 
@@ -57,7 +57,7 @@ mod_alive <- gam(cbind(N_Algae_alive, N_Bottom_alive) ~ s(Prop_T, by = Density, 
 summary(mod_alive)
 draw(mod_alive)
 
-appraise(mod)
+appraise(mod_alive)
 
 
 
@@ -65,12 +65,77 @@ appraise(mod)
 
 T_a_Asc + T_a_Fuc + T_dead_Asc + T_dead_Fuc + E_a_Asc + E_a_Fuc + E_dead_Asc + E_dead_Fuc
 
-ggplot(myt, aes(x = Density, y = (T_a_Asc + T_a_Fuc)/(T_a_Asc + T_a_Fuc + E_a_Asc + E_a_Fuc) )) +
-  geom_boxplot()
+myt <- 
+  myt %>% 
+  mutate(Prop_T_Algae = (T_a_Asc + T_a_Fuc)/(T_a_Asc + T_a_Fuc + E_a_Asc + E_a_Fuc),
+         Prop_T_Bottom = (T_a_bot + T_a_bot)/(T_a_bot + T_a_bot + E_a_bot + E_a_bot)
+         )
 
 
-ggplot(myt, aes(x = Density, y = (T_a_bot + T_a_bot)/(T_a_bot + T_a_bot + E_a_bot + E_a_bot) )) +
-  geom_boxplot()
+names(myt)
+
+ggplot(myt, aes(x = Density, y = Prop_T_Algae)) +
+  geom_boxplot() +
+  geom_hline(yintercept = median(myt$Prop_T_Bottom, na.rm = T))
+
+ggplot(myt, aes(x = Density, y = Prop_T_Bottom)) +
+  geom_boxplot() +
+  geom_hline(yintercept = median(myt$Prop_T_Bottom, na.rm = T))
+
+
+#Сравнение Prop_T на водорослях и на дне для разных градаций плотностей
+
+myt2 <-
+myt %>% 
+  select(ID, Density, B_Algae, Prop_T, Prop_T_Algae, Prop_T_Bottom) %>% 
+  filter(complete.cases(.)) %>% 
+  rename(Algae = Prop_T_Algae, Bottom = Prop_T_Bottom) %>% 
+  mutate(Diff = (Algae - Bottom) )
+
+mod_diff <- gam(Diff ~ s(Prop_T, by = Density, bs = "cr") + Density + B_Algae, data = myt2) 
+
+appraise(mod_diff)
+
+library(DHARMa)
+
+simulateResiduals(mod_diff, plot = T)
+
+summary(mod_diff)
+
+draw(mod_diff)
+
+
+
+
+
+myt2 %>% 
+  ggplot(aes(Algae, Bottom)) +
+  geom_point() + 
+  geom_abline() +
+  facet_wrap(~Density)
+
+myt <-
+myt %>% 
+  mutate(Prop_T_moved = (T_a_Asc + T_a_Fuc)/(T_a_bot + T_a_Asc + T_a_Fuc), 
+         Prop_E_moved = (E_a_Asc + E_a_Fuc )/(E_a_bot + E_a_Asc + E_a_Fuc ))
+
+myt$Prop_T_moved
+
+myt$Prop_E_moved
+
+Pl_T_moved <-
+ggplot(myt, aes(Density, Prop_T_moved)) +
+  geom_boxplot() +
+  ylim(0,1)
+
+
+Pl_E_moved <-
+ggplot(myt, aes(Density, Prop_E_moved)) +
+  geom_boxplot() +
+  ylim(0,1)
+
+library(cowplot)
+plot_grid(Pl_T_moved, Pl_E_moved)
 
 ###############################################333
 
@@ -96,6 +161,22 @@ df <-
 
 myt_outcome <- 
 merge(myt_outcome, df)
+
+
+myt_outcome %>% 
+  group_by(Density, Substrate) %>% 
+  summarise(N_T = sum(Morphotype == "T"),
+            N_E = sum(Morphotype == "E")) %>% 
+  mutate(Prop_T = N_T/(N_T + N_E))
+
+
+myt_substr <- 
+myt_outcome %>% 
+  group_by(Density, Substrate, Morphotype) %>% 
+  summarise(N = n())
+
+
+
 
 
 Mod_deadness <- gam(Out ~ s(Prop_T, by = Density ) + Density + Morphotype, family = "binomial", data = myt_outcome, method = "REML")
