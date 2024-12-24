@@ -1,0 +1,10 @@
+@article{grinnell1917niche,
+  title={The niche-relationships of the California Thrasher},
+  author={Grinnell, Joseph},
+  journal={The Auk},
+  volume={34},
+  number={4},
+  pages={427--433},
+  year={1917},
+  publisher={JSTOR}
+}
