@@ -1,0 +1,141 @@
+---
+title: ""
+author: ""
+date: ''
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r cars, include=FALSE}
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(broom)
+
+
+myt <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист2')
+
+
+myt <-
+myt %>% 
+  mutate(NT =T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot, 
+         NE = E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
+         Prop_T = NT/(NT + NE),
+         N_enitial = NT + NE,
+         N_final = T_a_Asc + T_a_Fuc + T_a_bot + E_a_Asc + E_a_Fuc + E_a_bot,
+         Prop_dead_T = (T_dead_Asc + T_dead_Fuc + T_dead_bot)/NT,
+         Prop_dead_E = (E_dead_Asc + E_dead_Fuc + E_dead_bot)/NE,
+         N_T_algae = T_a_Asc + T_a_Fuc + T_dead_Asc + T_dead_Fuc,
+         N_E_algae = E_a_Asc + E_a_Fuc + E_dead_Asc + E_dead_Fuc,
+         N_T_bot = T_a_bot + T_dead_bot,
+         N_E_bot = E_a_bot + E_dead_bot,
+         Prop_T_algae = N_T_algae /(N_T_algae + N_T_bot),
+         Prop_E_algae = N_E_algae /(N_E_algae + N_E_bot),
+         N_Fuc = T_a_Fuc + T_dead_Fuc + E_a_Fuc + E_dead_Fuc,
+         N_Asc = T_a_Asc + T_dead_Asc + E_a_Asc + E_dead_Asc,
+         Prop_Fuc = N_Fuc/(N_Asc + N_Fuc),
+         Prop_Asc = N_Asc/(N_Asc + N_Fuc),
+         Prop_algae = (N_T_algae + N_E_algae)/(NT + NE),
+         Prop_dead = (T_dead_Asc + T_dead_Fuc + T_dead_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot)/(NT + NE),
+         Prop_dead = (T_dead_Asc + T_dead_Fuc + T_dead_bot)/NT,
+           Prop_T_bottom = N_T_bot /(N_E_bot + N_T_bot),
+         Prop_T_algae_2 = N_T_algae /(N_T_algae + N_E_algae),
+           Diff = Prop_T_algae_2 - Prop_T_bottom,
+         d = N_Fuc - N_Asc) %>% 
+  filter(Type == 'закрытый') %>% 
+  filter(N_final != 0)
+
+myt <-
+  myt %>% 
+  filter(ID != 34)
+
+
+```
+
+
+Вероятность гибели
+```{r, echo=FALSE}
+
+
+myt_status <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист3')
+
+
+
+myt_status %>% 
+  pivot_longer(cols = -c(ID, Location, Status, Morphotype)  ) %>%
+  uncount(value)  %>%
+  as_tibble ->
+  myt_outcome
+
+myt_outcome %>%
+  mutate(Out = ifelse(Status == "мертвые", 1, 0),
+         Substrate = ifelse(Location == "Грунт", "Bottom", "Algae")) ->
+  myt_outcome
+
+
+myt_cage_param <- 
+  myt %>% 
+  select(ID, weight_Asc, weight_Fuc, Prop_T, N_final)
+
+myt_outcome <- merge(myt_outcome, myt_cage_param)
+
+
+
+mod <- glm(Out ~  Substrate*Morphotype + Prop_T*Morphotype + N_final*Morphotype, data = myt_outcome )
+
+
+mod2 <- update(mod, .~. - Morphotype:Prop_T)
+mod3 <- update(mod2, . ~ . - Morphotype:N_final )
+mod4 <- update(mod3, . ~ . - N_final )
+
+
+kable(tidy(mod4))
+
+My_data <- expand.grid(Substrate = c("Bottom", "Algae"), Morphotype = c("T", "E"), Prop_T = seq(min(myt_outcome$Prop_T), max(myt_outcome$Prop_T), length.out = 20))
+
+
+predicted <- predict(mod4, newdata = My_data, se.fit = T)
+
+My_data$Predicted <- predicted$fit
+My_data$SE <- predicted$se.fit
+
+
+
+```
+
+
+
+```{r, echo=FALSE}
+ggplot(My_data, aes(x = Prop_T, y = Predicted, color = Morphotype)) +
+  geom_line() +
+  geom_ribbon(aes(ymin = Predicted - 2*SE, ymax = Predicted + 2*SE), alpha = 0.2)+
+  facet_wrap(~ Substrate)
+```
+
+
+
+
+Доля Т на фукоидах
+```{r pressure, echo=FALSE}
+mod_3 <- lm(Prop_T_algae ~ Prop_T + N_final, data = myt)
+# summary(mod_3)
+
+kable(tidy(mod_3))
+```
+
+Доля Е на фукоидах
+```{r, echo=FALSE}
+mod2_3 <- lm(Prop_E_algae ~ weight_Asc, data = myt) 
+kable(tidy(mod2_3))
+```
+
+
+```{r, echo=FALSE}
+
+```
