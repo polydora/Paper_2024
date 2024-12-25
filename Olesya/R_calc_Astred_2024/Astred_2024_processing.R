@@ -43,9 +43,14 @@ ggplot(data = cage_param, aes(x = Type, y = Prop_Dead)) +
   geom_boxplot() 
 
 
-ggplot(data = cage_param, aes(x = Prop_T, y = B)) +
+ggplot(data = cage_param, aes(x = Type, y = B)) +
   geom_point(aes(color = Type), size = 4) +
   geom_smooth(method = "loess", se = T)
+
+cage_param$Type <- factor(cage_param$Type, levels = c("80E", "40/40", "80T"))
+
+ggplot(data = cage_param, aes(x = Type, y = B)) +
+  geom_boxplot()
 
 ggplot(data = cage_param, aes(x = Prop_T, y = Abund)) +
   geom_point(aes(color = Type), size = 4) +
@@ -109,3 +114,13 @@ summary(Mod_all1)
 # AIC(Mod_all1, Mod_all2)
 
 draw(Mod_all1)
+
+
+
+Mod_B_aster <- gam(log(B) ~ s(Prop_T), data = cage_param)
+
+summary(Mod_B_aster)
+
+draw(Mod_B_aster, residuals = T)
+
+
