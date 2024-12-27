@@ -119,11 +119,31 @@ ggplot(diverse, aes(x = comm_total_N, y = Spec_Num))+
 #########################
 comm_dist <- (vegdist(comm[,-c(1:2)], method = "bray"))
 
-plot(hclust(d = comm_dist, method = "ward.D" ))
+dendr_comm <- as.dendrogram(hclust(d = comm_dist, method = "ward.D" ))
 
-
+plot(dendr_comm)
 
 
 crang_dist <- (vegdist(crang[,-c(1:2)], method = "bray"))
-plot(hclust(d = crang_dist, method = "ward.D" ))
+dendr_crang <- as.dendrogram(hclust(d = crang_dist, method = "ward.D" ))
 
+
+library(dendextend)
+
+
+tanglegram(dendr_comm, dendr_crang, sort = TRUE)
+
+
+untang_w <- untangle_step_rotate_2side(dendr_comm, dendr_crang, print_times = T)
+
+tanglegram(untang_w[[1]], untang_w[[2]],
+           highlight_distinct_edges = FALSE,
+           common_subtrees_color_lines = F,
+           main = "",
+           main_left = "Сообщество",
+           main_right = "Питание",
+           columns_width = c(8, 1, 8),
+           margin_top = 3.2, margin_bottom = 2.5,
+           margin_inner = 4, margin_outer = 0.5,
+           lwd = 1.2, edge.lwd = 1.2, 
+           lab.cex = 1.5, cex_main = 2)
