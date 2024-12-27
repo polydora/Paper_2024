@@ -18,6 +18,8 @@ library(tidyr)
 library(ggplot2)
 library(broom)
 
+library(mgcv)
+library(gratia)
 
 myt <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист2')
 
@@ -59,7 +61,7 @@ myt <-
 ```
 
 
-Вероятность гибели
+### Вероятность гибели
 ```{r, echo=FALSE}
 
 
@@ -121,7 +123,7 @@ ggplot(My_data, aes(x = Prop_T, y = Predicted, color = Morphotype)) +
 
 
 
-Доля Т на фукоидах
+### Доля Т на фукоидах
 ```{r pressure, echo=FALSE}
 mod_3 <- lm(Prop_T_algae ~ Prop_T + N_final, data = myt)
 # summary(mod_3)
@@ -129,7 +131,7 @@ mod_3 <- lm(Prop_T_algae ~ Prop_T + N_final, data = myt)
 kable(tidy(mod_3))
 ```
 
-Доля Е на фукоидах
+### Доля Е на фукоидах
 ```{r, echo=FALSE}
 mod2_3 <- lm(Prop_E_algae ~ weight_Asc, data = myt) 
 kable(tidy(mod2_3))
@@ -137,5 +139,137 @@ kable(tidy(mod2_3))
 
 
 ```{r, echo=FALSE}
+myt <-
+  myt %>% 
+  mutate(N_total = T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot + E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
+         NT = T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot, 
+         NE = E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
+         Prop_T = NT/(NT + NE))
+
+
+myt <-
+  myt %>% 
+  mutate(N_Algae = T_a_Asc + T_a_Fuc + T_dead_Asc + T_dead_Fuc + E_a_Asc + E_a_Fuc + E_dead_Asc + E_dead_Fuc,
+         N_Bottom = T_a_bot + T_dead_bot + E_a_bot + E_dead_bot,
+         N_Algae_alive = T_a_Asc + T_a_Fuc + E_a_Asc + E_a_Fuc,
+         N_Bottom_alive = T_a_bot + E_a_bot,
+         B_Algae = weight_Fuc + weight_Asc)
+
+
+myt <- 
+myt %>% 
+  mutate(Density = factor(case_when(N_total <= 20 ~ "Low",
+                             N_total > 20 & N_total < 60 ~ "Medium",
+                             N_total >= 60 ~ "Nigh" )))
+
+
 
 ```
+
+## Результаты
+### Влияние таксономической структуры на вероятность выбора в качестве субстрата фукоидов
+```{r}
+mod_alive <- gam(cbind(N_Algae_alive, N_Bottom_alive) ~ s(Prop_T, by = Density, k = 5) + Density  + s(B_Algae, by = Density, k = 5) , data = myt, family = "binomial", method = "REML")
+
+kable(tidy(mod_alive))
+summary(mod_alive)
+```
+
+```{r}
+draw(mod_alive, residuals = T)
+```
+
+
+
+Из результатов анализа модели (табл. +) следует, что плотность поселения не оказывает значимого влияния на вероятность поселения мидий на фукоидах. Мы выявили значимое влияние биомассы фукоидов (Табл. +++). Однако этот рассматривается нами как дополнительная ковариата, влияние которой вне интереса данного исследования.  Значимым является зависимость между вероятностью попадания на фукоиды и долей Т-морфотипа в случае средней и высокой плотности. Согласно построенной моедли, вероятность поселения мидий на фукоидах увеличивается по мере роста частоты T-морфотпа (рис. +), как в случае средней, так и высокой плотности. 
+
+
+## Влияние таксономической структуры на изменение величины Diff
+```{r}
+myt <- 
+  myt %>% 
+  mutate(Prop_T_Algae = (T_a_Asc + T_a_Fuc)/(T_a_Asc + T_a_Fuc + E_a_Asc + E_a_Fuc),
+         Prop_T_Bottom = (T_a_bot + T_a_bot)/(T_a_bot + T_a_bot + E_a_bot + E_a_bot)
+         )
+
+myt2 <-
+myt %>% 
+  select(ID, Density, B_Algae, Prop_T, Prop_T_Algae, Prop_T_Bottom) %>% 
+  filter(complete.cases(.)) %>% 
+  rename(Algae = Prop_T_Algae, Bottom = Prop_T_Bottom) %>% 
+  mutate(Diff = (Algae - Bottom) )
+
+
+mod_diff <- gam(Diff ~ s(Prop_T, by = Density, bs = "cr", k = 3) + Density + s(B_Algae, by = Density), data = myt2) 
+
+summary(mod_diff)
+kable(tidy(mod_diff))
+```
+
+```{r}
+draw(mod_diff, residuals = T)
+```
+
+Значимой связи величины Diff с плотностью выявлено не было (Табл. ++). Была отмечена статитстически значимая связь с биомассой фукоидов при низкой плотности поселения. Однако, как и в случае, описанном выше, эта закономерность вне интереса данной работы. Мы выявили значимое влияние дол Т-морфотипа в садке при высокой и средней плотности поселения (Табл. +++). Согласно полстроенной моедли, величина Diff нелинейно завсисит от  доли Т-морфотипа при условии среденй плотности поселения: максимум величины Diff приходится на долю T-морфотипа в диапазоне 0,1 - 0,15 (Рис. ++).  При высокой плотности наблюдается линейная связь: чем выше доля Е-морфотипа в послении тем выше величина Diff (рис. +).
+
+
+
+## Влияние таксономической структуры на гибель мидий
+```{r}
+myt_status %>% 
+  filter(Type == "ET") %>% 
+  pivot_longer(cols = -c(ID, Location, Status, Morphotype, Type)  ) %>%
+  uncount(value)  %>%
+  as_tibble ->
+  myt_outcome
+
+myt_outcome %>%
+  mutate(Out = ifelse(Status == "мертвые", 1, 0),
+         Substrate = ifelse(Location == "Грунт", "Bottom", "Algae")) ->
+  myt_outcome
+
+
+df <- 
+  myt %>% 
+  select(ID, Density, Prop_T, B_Algae)
+
+myt_outcome <- 
+merge(myt_outcome, df)
+
+
+myt_outcome %>% 
+  group_by(Density, Substrate) %>% 
+  summarise(N_T = sum(Morphotype == "T"),
+            N_E = sum(Morphotype == "E")) %>% 
+  mutate(Prop_T = N_T/(N_T + N_E))
+
+
+myt_substr <- 
+myt_outcome %>% 
+  group_by(Density, Substrate, Morphotype) %>% 
+  summarise(N = n())
+
+
+Mod_deadness <- gam(Out ~ s(Prop_T, by = Density ) + Density + Morphotype +  + s(B_Algae, by = Density) , family = "binomial", data = myt_outcome, method = "REML")
+
+summary(Mod_deadness)
+kable(tidy(Mod_deadness, parametric = T))
+kable(tidy(Mod_deadness, parametric = F))
+
+
+```
+
+```{r}
+draw(Mod_deadness, residuals = T)
+```
+
+
+
+Вероятность смертности с плотностью значимо не связана (). Прослеживается значимая связь с Т-морфотипом, а также с долей Т-морфотипа при высокой плотности. Соглавсно полстроенной модели, вероятность гибели Т-морфотипа снижается по мере увеличения  доли Т-морфотипа в плотных поселениях (рис. +). 
+
+## Обсуждение результатов
+При высокой доли Т-морфотипа происходит уменьшение смертности. Это противоречит литературным данным (), однако может объясняться увеличенем доли мидий на фукоидах. С возрастанием численности Т-морфотипа мидии чаще оказываются на фукоидах. На этом субстрате снижается смертность моллюсков, что отражается на поселении в целом. 
+С увеличением доли Т-морфотипа в поселении большая часть этого морфотипа оказывается на фукоидах. Таким образом, уход мидий на фукоиды может быть связан с предпочтением этого субстрата Т-морфотипом ().
+
+
+
