@@ -124,3 +124,6 @@ plot(hclust(d = comm_dist, method = "ward.D" ))
 
 
 
+crang_dist <- (vegdist(crang[,-c(1:2)], method = "bray"))
+plot(hclust(d = crang_dist, method = "ward.D" ))
+
