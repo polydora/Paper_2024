@@ -10,8 +10,8 @@ str(Crang_2024)
 
 
 Crang_2024 %>%
-  select(-c( ID, W, L_Car)) %>% 
-  group_by(Site, Sample) %>% 
+  select(-c(Sample, ID, W, L_Car, Lon, Lat)) %>% 
+  group_by(Area, Site) %>% 
   summarise_all(.funs = "mean") ->
   crang
 
@@ -25,11 +25,14 @@ library(ggplot2)
 
 mds_points <- data.frame(scores(ord_crang)$sites)
 
-mds_points$Area <- crang$Site
+mds_points$Area <- crang$Area
 
 ggplot(mds_points, aes(NMDS1, NMDS2, color=Area)) +
   geom_point(size = 4)
 
+
+
+community <- read_excel("Data/Crang_2024.xlsx", sheet =  na = "NA")
 
 
 
