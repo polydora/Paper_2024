@@ -60,26 +60,47 @@ ggplot(fetch_myt_combined, aes(x = log(fetch), y = Total_Dens, color = Fucoid)) 
 
 myt$Fucoid <- factor(myt$Fucoid)
 
-
+fetch_myt_combined$Fucoid <- factor(fetch_myt_combined$Fucoid)
 #модель соотношения T и E
 
-Mod <- gam(Prop_T ~ s(log(fetch), by = Fucoid, k = 4) + Fucoid, data = fetch_myt_combined)
+Mod <- gam(Prop_T ~ s(log(fetch), by = Fucoid, k = 6) + Fucoid + s(Total_Dens), data = fetch_myt_combined)
 
 summary(Mod)
 
 draw(Mod)
 
+модели плотности
 
-#модель плотности
+Mod_Dens_T <- gam(Dens_T ~ s(log(fetch), by = Fucoid, k = 4) + Fucoid, data = fetch_myt_combined)
 
-Mod_Dens <- gam(Dens_T ~ s(log(fetch), by = Fucoid, k = 4) + Fucoid, data = fetch_myt_combined)
+summary(Mod_Dens_T)
 
-summary(Mod_Dens)
-
-draw(Mod_Dens)
-
+draw(Mod_Dens_T)
 
 
+Mod_Dens_E <- gam(Dens_E ~ s(log(fetch), by = Fucoid, k = 4) + Fucoid, data = fetch_myt_combined)
+
+summary(Mod_Dens_E)
+
+Pl_Dens_E_A <- draw(Mod_Dens_E,select = 1)
+
+Pl_Dens_E_A <-
+Pl_Dens_E_A + 
+  theme_bw() +
+  ggtitle("На A.nodosum", subtitle = NULL) +
+  labs(x = "Логарифм величины fetc", y = "Частный эффеект")
+
+Pl_Dens_E_F <- draw(Mod_Dens_E,select = 2)
+
+Pl_Dens_E_F <-
+Pl_Dens_E_F + 
+  theme_bw() +
+  ggtitle("На F.vesiculosus", subtitle = NULL) +
+  labs(x = "Логарифм величины fetc", y = "Частный эффеект")
+
+library(cowplot)
+
+plot_grid(Pl_Dens_E_A, Pl_Dens_E_F)
 
 #####################
 
