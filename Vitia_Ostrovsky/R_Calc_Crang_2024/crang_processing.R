@@ -122,11 +122,11 @@ comm_dist <- (vegdist(comm[,-c(1:2)], method = "bray"))
 dendr_comm <- as.dendrogram(hclust(d = comm_dist, method = "ward.D" ))
 
 plot(dendr_comm)
-
+p
 
 crang_dist <- (vegdist(crang[,-c(1:2)], method = "bray"))
 dendr_crang <- as.dendrogram(hclust(d = crang_dist, method = "ward.D" ))
-
+plot(dendr_crang)
 
 library(dendextend)
 
