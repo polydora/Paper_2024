@@ -83,12 +83,14 @@ comm %>%
   diverse$H_com
 
 ggplot(diverse, aes(x = H_com, y = Spec_Num))+
-  geom_point()+ 
-  geom_smooth(method = "lm")
+  geom_point(aes(color = Area), size = 4)+ 
+  geom_smooth(method = "lm") +
+  scale_color_manual(values = c("red", "blue")) +
+  labs(x = "Разнообразие в сообществе", y = "Количество видов в питании")
 
 
 ggplot(diverse, aes(x = H_com, y = Empty))+
-  geom_point()+ 
+  geom_point(aes(color = Area))+ 
   geom_smooth(method = "lm")
 
 ggplot(diverse, aes(x = H_com, y = H_crang))+
@@ -113,4 +115,12 @@ ggplot(diverse, aes(x = comm_total_N, y = Spec_Num))+
 
 
 
-round(vegdist(comm[,-c(1:2)]), 2)
+
+#########################
+comm_dist <- (vegdist(comm[,-c(1:2)], method = "bray"))
+
+plot(hclust(d = comm_dist, method = "ward.D" ))
+
+
+
+
