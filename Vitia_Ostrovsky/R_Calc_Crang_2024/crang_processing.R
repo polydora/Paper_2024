@@ -32,25 +32,25 @@ ggplot(mds_points, aes(NMDS1, NMDS2, color=Area)) +
 
 
 
-community <- read_excel("Data/Crang_2024.xlsx", sheet =  na = "NA")
+community <- read_excel("Data/Crang_2024.xlsx", sheet = "Чистовые",  na = "NA")
+
+community %>% 
+  group_by(Area, Site) %>% 
+  select(-ID) %>% 
+  summarise_all(.funs = "mean") ->
+  comm
 
 
 
 
 
+ord_comm <- metaMDS(comm[,-c(1:2)], distance = "bray")
 
-crang <- Crang_2024 %>%
-  select(-c(ID, W, L_Car, Lat, Lon)) %>%
-  group_by(Area, Sample) %>%
-  summarise(across(everything(), mean), .groups = 'drop')
+plot(ord_comm, type = "t")
 
-ord_crang <- metaMDS(crang[,-c(1:2)], distance = "bray")
+mds_points_comm <- data.frame(scores(ord_comm)$sites)
 
-plot(ord_crang, type = "t")
-
-mds_points <- data.frame(scores(ord_crang)$sites)
-
-mds_points$Area <-crang$Area
-ggplot(mds_points, aes(  NMDS1, NMDS2,t, color = Area)) +
+mds_points_comm$Area <-comm$Area
+ggplot(mds_points_comm, aes(  NMDS1, NMDS2,t, color = Area)) +
   geom_point(size = 4)
 
