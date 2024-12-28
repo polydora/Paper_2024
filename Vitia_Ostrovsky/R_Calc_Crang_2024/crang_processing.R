@@ -29,7 +29,9 @@ mds_points <- data.frame(scores(ord_crang)$sites)
 mds_points$Area <- crang$Area
 
 ggplot(mds_points, aes(NMDS1, NMDS2, color=Area)) +
-  geom_point(size = 4)
+  geom_point(size = 4)+
+  theme_bw()
+
 
 
 
@@ -52,6 +54,7 @@ plot(ord_comm, type = "t")
 mds_points_comm <- data.frame(scores(ord_comm)$sites)
 
 mds_points_comm$Area <-comm$Area
+
 ggplot(mds_points_comm, aes(  NMDS1, NMDS2,t, color = Area)) +
   geom_point(size = 4)
 ################
