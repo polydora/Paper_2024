@@ -1,16 +1,17 @@
 library(readxl)
-outline <- read_excel("Data/Crang_2024.xlsx", sheet = "Outline",  na = "NA")
+outline <- read_excel("Data/Crang 2022 full.xlsx", sheet = "Outline",  na = "NA")
 
   
- Pl_map <-
+Pl_Map_NN<-
     ggplot(outline, aes(x = Lon, y =Lat)) + 
     geom_path(aes( Type)) + 
     guides( "none") + 
-    scale_linetype_manual(values = c(2,1, 3)) +
+    scale_linetype_manual(values = c(2,3,1)) +
     theme_minimal()
+
+    Pl_Map_NN + geom_point(data = samples) 
  
- 
-    Pl_map + geom_point(data = )
+    
     
     
       

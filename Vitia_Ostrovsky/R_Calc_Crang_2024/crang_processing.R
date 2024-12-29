@@ -5,6 +5,8 @@ library(ggplot2)
 
 Crang_2024 <- read_excel("Data/Crang_2024.xlsx", na = "NA")
 
+
+
 str(Crang_2024)
 
 
@@ -56,7 +58,8 @@ mds_points_comm <- data.frame(scores(ord_comm)$sites)
 mds_points_comm$Area <-comm$Area
 
 ggplot(mds_points_comm, aes(  NMDS1, NMDS2,t, color = Area)) +
-  geom_point(size = 4)
+  geom_point(size = 4)+
+  theme_bw()
 ################
 
 crang %>% 
@@ -94,7 +97,8 @@ ggplot(diverse, aes(x = H_com, y = Spec_Num))+
 
 ggplot(diverse, aes(x = H_com, y = Empty))+
   geom_point(aes(color = Area))+ 
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm")+ 
+theme_bw()  
 
 ggplot(diverse, aes(x = H_com, y = H_crang))+
   geom_point(aes(color = Area))+
