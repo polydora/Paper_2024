@@ -21,6 +21,8 @@ Crang_2024 %>%
 
 ord_crang <- metaMDS(crang[ ,-c(1:2) ], distance = "bray")
 
+
+
 plot(ord_crang, type = "t")
 
 
@@ -33,6 +35,7 @@ mds_points$Area <- crang$Area
 ggplot(mds_points, aes(NMDS1, NMDS2, color=Area)) +
   geom_point(size = 4)+
   theme_bw()
+
 
 
 
@@ -154,3 +157,4 @@ tanglegram(untang_w[[1]], untang_w[[2]],
            margin_inner = 4, margin_outer = 0.5,
            lwd = 1.2, edge.lwd = 1.2, 
            lab.cex = 1.5, cex_main = 2)
+
