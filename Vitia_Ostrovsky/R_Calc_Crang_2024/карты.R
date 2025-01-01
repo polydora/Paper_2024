@@ -15,7 +15,8 @@ Pl_map <-
     
     Outline_N <- read_excel("Data/Crang_2024.xlsx", sheet="Outline", na ="NA")
     
-    samples_N <- read_excel("Data/Crang_2024.xlsx" , sheet = "Nor")   
+    samples_N <- read_excel("Data/Crang_2024.xlsx" , sheet = "Nor")
+    Samples_Nord <- read_excel("Data/Crang_2024.xlsx", sheet = "Nord")
     Pl_map_N <-
     ggplot(Outline_N, aes(x = Lon, y = Lat)) + 
       geom_path(aes(linetype = Type)) + 
@@ -24,4 +25,8 @@ Pl_map <-
       theme_bw() 
     
     Pl_map_N + geom_point(data = samples_N)
+   
+    
+    
+    Pl_map_N + geom_point(data = Samples_Nord) 
     
