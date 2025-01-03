@@ -95,7 +95,8 @@ ggplot(diverse, aes(x = H_com, y = Spec_Num))+
   geom_point(aes(color = Area), size = 4)+ 
   geom_smooth(method = "lm") +
   scale_color_manual(values = c("red", "blue")) +
-  labs(x = "Разнообразие в сообществе", y = "Количество видов в питании")
+  labs(x = "Разнообразие в сообществе", y = "Количество видов в питании")+ 
+  theme_bw()
 
 
 ggplot(diverse, aes(x = H_com, y = Empty))+
