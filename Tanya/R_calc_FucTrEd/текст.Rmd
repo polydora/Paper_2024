@@ -5,6 +5,7 @@ date: ''
 output: html_document
 ---
 
+
 ```{r setup, include=FALSE}
 library(knitr)
 
@@ -21,130 +22,21 @@ library(broom)
 library(mgcv)
 library(gratia)
 
+```
+
+
+## Результаты
+```{r, echo=FALSE}
+
 myt <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист2')
 
-
-myt <-
-myt %>% 
-  mutate(NT =T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot, 
-         NE = E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
-         Prop_T = NT/(NT + NE),
-         N_enitial = NT + NE,
-         N_final = T_a_Asc + T_a_Fuc + T_a_bot + E_a_Asc + E_a_Fuc + E_a_bot,
-         Prop_dead_T = (T_dead_Asc + T_dead_Fuc + T_dead_bot)/NT,
-         Prop_dead_E = (E_dead_Asc + E_dead_Fuc + E_dead_bot)/NE,
-         N_T_algae = T_a_Asc + T_a_Fuc + T_dead_Asc + T_dead_Fuc,
-         N_E_algae = E_a_Asc + E_a_Fuc + E_dead_Asc + E_dead_Fuc,
-         N_T_bot = T_a_bot + T_dead_bot,
-         N_E_bot = E_a_bot + E_dead_bot,
-         Prop_T_algae = N_T_algae /(N_T_algae + N_T_bot),
-         Prop_E_algae = N_E_algae /(N_E_algae + N_E_bot),
-         N_Fuc = T_a_Fuc + T_dead_Fuc + E_a_Fuc + E_dead_Fuc,
-         N_Asc = T_a_Asc + T_dead_Asc + E_a_Asc + E_dead_Asc,
-         Prop_Fuc = N_Fuc/(N_Asc + N_Fuc),
-         Prop_Asc = N_Asc/(N_Asc + N_Fuc),
-         Prop_algae = (N_T_algae + N_E_algae)/(NT + NE),
-         Prop_dead = (T_dead_Asc + T_dead_Fuc + T_dead_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot)/(NT + NE),
-         Prop_dead = (T_dead_Asc + T_dead_Fuc + T_dead_bot)/NT,
-           Prop_T_bottom = N_T_bot /(N_E_bot + N_T_bot),
-         Prop_T_algae_2 = N_T_algae /(N_T_algae + N_E_algae),
-           Diff = Prop_T_algae_2 - Prop_T_bottom,
-         d = N_Fuc - N_Asc) %>% 
-  filter(Type == 'закрытый') %>% 
-  filter(N_final != 0)
-
-myt <-
-  myt %>% 
-  filter(ID != 34)
-
-
-```
-
-
-### Вероятность гибели
-```{r, echo=FALSE}
-
-
-myt_status <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист3')
-
-
-
-myt_status %>% 
-  pivot_longer(cols = -c(ID, Location, Status, Morphotype)  ) %>%
-  uncount(value)  %>%
-  as_tibble ->
-  myt_outcome
-
-myt_outcome %>%
-  mutate(Out = ifelse(Status == "мертвые", 1, 0),
-         Substrate = ifelse(Location == "Грунт", "Bottom", "Algae")) ->
-  myt_outcome
-
-
-myt_cage_param <- 
-  myt %>% 
-  select(ID, weight_Asc, weight_Fuc, Prop_T, N_final)
-
-myt_outcome <- merge(myt_outcome, myt_cage_param)
-
-
-
-mod <- glm(Out ~  Substrate*Morphotype + Prop_T*Morphotype + N_final*Morphotype, data = myt_outcome )
-
-
-mod2 <- update(mod, .~. - Morphotype:Prop_T)
-mod3 <- update(mod2, . ~ . - Morphotype:N_final )
-mod4 <- update(mod3, . ~ . - N_final )
-
-
-kable(tidy(mod4))
-
-My_data <- expand.grid(Substrate = c("Bottom", "Algae"), Morphotype = c("T", "E"), Prop_T = seq(min(myt_outcome$Prop_T), max(myt_outcome$Prop_T), length.out = 20))
-
-
-predicted <- predict(mod4, newdata = My_data, se.fit = T)
-
-My_data$Predicted <- predicted$fit
-My_data$SE <- predicted$se.fit
-
-
-
-```
-
-
-
-```{r, echo=FALSE}
-ggplot(My_data, aes(x = Prop_T, y = Predicted, color = Morphotype)) +
-  geom_line() +
-  geom_ribbon(aes(ymin = Predicted - 2*SE, ymax = Predicted + 2*SE), alpha = 0.2)+
-  facet_wrap(~ Substrate)
-```
-
-
-
-
-### Доля Т на фукоидах
-```{r pressure, echo=FALSE}
-mod_3 <- lm(Prop_T_algae ~ Prop_T + N_final, data = myt)
-# summary(mod_3)
-
-kable(tidy(mod_3))
-```
-
-### Доля Е на фукоидах
-```{r, echo=FALSE}
-mod2_3 <- lm(Prop_E_algae ~ weight_Asc, data = myt) 
-kable(tidy(mod2_3))
-```
-
-
-```{r, echo=FALSE}
 myt <-
   myt %>% 
   mutate(N_total = T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot + E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
          NT = T_a_Asc + T_a_Fuc + T_a_bot + T_dead_Asc + T_dead_Fuc + T_dead_bot, 
          NE = E_a_Asc + E_a_Fuc + E_a_bot + E_dead_Asc + E_dead_Fuc + E_dead_bot,
-         Prop_T = NT/(NT + NE))
+         Prop_T = NT/(NT + NE)) %>% 
+  filter(Open == 'закрытый')
 
 
 myt <-
@@ -154,6 +46,8 @@ myt <-
          N_Algae_alive = T_a_Asc + T_a_Fuc + E_a_Asc + E_a_Fuc,
          N_Bottom_alive = T_a_bot + E_a_bot,
          B_Algae = weight_Fuc + weight_Asc)
+
+
 
 
 myt <- 
@@ -166,22 +60,23 @@ myt %>%
 
 ```
 
-## Результаты
+
 ### Влияние таксономической структуры на вероятность выбора в качестве субстрата фукоидов
 ```{r}
 mod_alive <- gam(cbind(N_Algae_alive, N_Bottom_alive) ~ s(Prop_T, by = Density, k = 5) + Density  + s(B_Algae, by = Density, k = 5) , data = myt, family = "binomial", method = "REML")
 
-kable(tidy(mod_alive))
-summary(mod_alive)
+kable(tidy(mod_alive, parametric = T))
+kable(tidy(mod_alive, parametric = F))
+#summary(mod_alive)
 ```
 
 ```{r}
-draw(mod_alive, residuals = T)
+draw(mod_alive, residuals = T, select = 1:3)
 ```
 
 
 
-Из результатов анализа модели (табл. +) следует, что плотность поселения не оказывает значимого влияния на вероятность поселения мидий на фукоидах. Мы выявили значимое влияние биомассы фукоидов (Табл. +++). Однако этот рассматривается нами как дополнительная ковариата, влияние которой вне интереса данного исследования.  Значимым является зависимость между вероятностью попадания на фукоиды и долей Т-морфотипа в случае средней и высокой плотности. Согласно построенной моедли, вероятность поселения мидий на фукоидах увеличивается по мере роста частоты T-морфотпа (рис. +), как в случае средней, так и высокой плотности. 
+Из результатов анализа модели (табл. +) следует, что плотность поселения не оказывает значимого влияния на вероятность поселения мидий на фукоидах. Мы выявили значимое влияние биомассы фукоидов (Табл. +++). Однако этот фактор рассматривается нами как дополнительная ковариата, влияние которой вне интереса данного исследования.  Значимым является зависимость между вероятностью попадания на фукоиды и долей Т-морфотипа в случае средней и высокой плотности. Согласно построенной модели, вероятность поселения мидий на фукоидах увеличивается по мере роста частоты T-морфотипа (рис. +), как в случае средней, так и высокой плотности. 
 
 
 ## Влияние таксономической структуры на изменение величины Diff
@@ -202,20 +97,24 @@ myt %>%
 
 mod_diff <- gam(Diff ~ s(Prop_T, by = Density, bs = "cr", k = 3) + Density + s(B_Algae, by = Density), data = myt2) 
 
-summary(mod_diff)
-kable(tidy(mod_diff))
+#summary(mod_diff)
+kable(tidy(mod_diff, parametric = T))
+kable(tidy(mod_diff, parametric = F))
 ```
 
 ```{r}
-draw(mod_diff, residuals = T)
+draw(mod_diff, residuals = T, select = 1:3)
 ```
 
-Значимой связи величины Diff с плотностью выявлено не было (Табл. ++). Была отмечена статитстически значимая связь с биомассой фукоидов при низкой плотности поселения. Однако, как и в случае, описанном выше, эта закономерность вне интереса данной работы. Мы выявили значимое влияние дол Т-морфотипа в садке при высокой и средней плотности поселения (Табл. +++). Согласно полстроенной моедли, величина Diff нелинейно завсисит от  доли Т-морфотипа при условии среденй плотности поселения: максимум величины Diff приходится на долю T-морфотипа в диапазоне 0,1 - 0,15 (Рис. ++).  При высокой плотности наблюдается линейная связь: чем выше доля Е-морфотипа в послении тем выше величина Diff (рис. +).
+Значимой связи величины Diff с плотностью выявлено не было (Табл. ++). Была отмечена статистически значимая связь с биомассой фукоидов при низкой плотности поселения. Однако, как и в случае, описанном выше, эта закономерность вне интереса данной работы. Мы выявили значимое влияние доли Т-морфотипа в садке при высокой и средней плотности поселения (Табл. +++). Согласно построенной модели, величина Diff нелинейно зависит от  доли Т-морфотипа при условии средней плотности поселения: максимум величины Diff приходится на долю T-морфотипа в диапазоне 0,1 - 0,15 (Рис. ++).  При высокой плотности наблюдается линейная связь: чем выше доля T-морфотипа в поселении тем выше величина Diff (рис. +).
 
 
 
 ## Влияние таксономической структуры на гибель мидий
 ```{r}
+
+myt_status <- read_excel('Data/FucTrEd.xlsx', sheet = 'Лист3')
+
 myt_status %>% 
   filter(Type == "ET") %>% 
   pivot_longer(cols = -c(ID, Location, Status, Morphotype, Type)  ) %>%
@@ -237,11 +136,11 @@ myt_outcome <-
 merge(myt_outcome, df)
 
 
-myt_outcome %>% 
-  group_by(Density, Substrate) %>% 
-  summarise(N_T = sum(Morphotype == "T"),
-            N_E = sum(Morphotype == "E")) %>% 
-  mutate(Prop_T = N_T/(N_T + N_E))
+# myt_outcome %>% 
+#   group_by(Density, Substrate) %>% 
+#   summarise(N_T = sum(Morphotype == "T"),
+#             N_E = sum(Morphotype == "E")) %>% 
+#   mutate(Prop_T = N_T/(N_T + N_E))
 
 
 myt_substr <- 
@@ -253,6 +152,7 @@ myt_outcome %>%
 Mod_deadness <- gam(Out ~ s(Prop_T, by = Density ) + Density + Morphotype +  + s(B_Algae, by = Density) , family = "binomial", data = myt_outcome, method = "REML")
 
 summary(Mod_deadness)
+
 kable(tidy(Mod_deadness, parametric = T))
 kable(tidy(Mod_deadness, parametric = F))
 
@@ -260,16 +160,23 @@ kable(tidy(Mod_deadness, parametric = F))
 ```
 
 ```{r}
-draw(Mod_deadness, residuals = T)
+draw(Mod_deadness, residuals = T, select = 1:3)
 ```
 
+Модель выявила значимую связь между вероятностью гибели мидии и её морфотипом (табл. +). Мертвыми чаще оказывались мидии T-морфотипа.
 
-
-Вероятность смертности с плотностью значимо не связана (). Прослеживается значимая связь с Т-морфотипом, а также с долей Т-морфотипа при высокой плотности. Соглавсно полстроенной модели, вероятность гибели Т-морфотипа снижается по мере увеличения  доли Т-морфотипа в плотных поселениях (рис. +). 
+Согласно построенной модели, вероятность гибели не имеет значимой связи  с плотностью поселения (Табл. ++). Вместе с тем, прослеживается значимая связь с морфотипом:  смертность мидий T-морфотипа выше. Кроме того, была выявлена стастически значимая связь смертности с долей Т-морфотипа при высокой плотности: в плотных поселениях вероятность гибели  снижается по мере увеличения  доли Т-морфотипа (рис. +). 
 
 ## Обсуждение результатов
-При высокой доли Т-морфотипа происходит уменьшение смертности. Это противоречит литературным данным (), однако может объясняться увеличенем доли мидий на фукоидах. С возрастанием численности Т-морфотипа мидии чаще оказываются на фукоидах. На этом субстрате снижается смертность моллюсков, что отражается на поселении в целом. 
-С увеличением доли Т-морфотипа в поселении большая часть этого морфотипа оказывается на фукоидах. Таким образом, уход мидий на фукоиды может быть связан с предпочтением этого субстрата Т-морфотипом ().
+
+
+Значимой связи с плотностью поселения обнаружено не было. Вероятность поселения мидий на фукоидах и Diff увеличиваются по мере возрастания доли Т-морфотипа. Такая зависимость проявляется в поселениях средней и высокой плотности. Напротив, при высокой доли Т-морфотипа происходит уменьшение смертности. 
+
+С увеличением доли Т-морфотипа в поселении большая часть этого морфотипа оказывается на фукоидах. Этот факт может быть обьяснен тем, что мидии Т-морфотипа предпочитают этот субстрат (Katolikova et al., 2016), а так же свидетельствовать о разделении ниш. Более того, вероятность гибели Т-морфотипа на грунте выше, следовательно, в этом случае фукоиды оказываются более выгодным субстратом.
+
+Уменьшение смертности в поселениях с высокой долей Т-морфотипа входит в противоречие с литературными данными (Шилонцев, 2023; Ковалев, 2023). Однако в этих работах влияние доли Т-морфотипа изучалось для поселений на грунте. С появлением нового субстрата появляется еще один фактор, влияющий на вероятность гибели. Мидии, оставшиеся на грунте, чаще оказываются мертвыми. Увеличение доли Т-морфотипа, в свою очередь, ведет к увеличению количества мидий на фукоидах, то есть на более благоприятном субстрате. Таким образом, смертность уменьшается. 
+
+
 
 
 
