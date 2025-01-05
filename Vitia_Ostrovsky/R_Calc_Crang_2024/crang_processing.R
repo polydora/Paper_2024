@@ -2,6 +2,7 @@ library(readxl)
 library(vegan)
 library(dplyr)
 library(ggplot2)
+library(patchwork)
 
 Crang_2024 <- read_excel("Data/Crang_2024.xlsx", na = "NA")
 
@@ -94,7 +95,7 @@ comm %>%
 ggplot(diverse, aes(x = H_com, y = Spec_Num))+
   geom_point(aes(color = Area), size = 4)+ 
   geom_smooth(method = "lm") +
-  scale_color_manual(values = c("red", "blue")) +
+  scale_color_manual(values = c("blue", "red")) +
   labs(x = "Разнообразие в сообществе", y = "Количество видов в питании")+ 
   theme_bw()
 
@@ -158,4 +159,20 @@ tanglegram(untang_w[[1]], untang_w[[2]],
            margin_inner = 4, margin_outer = 0.5,
            lwd = 1.2, edge.lwd = 1.2, 
            lab.cex = 1.5, cex_main = 2)
+###########################
+# Размерно-весовая струткра
+
+ggplot(Crang_2024, aes(x = L_Car)) +
+  geom_histogram(aes(fill = Area)) +
+  facet_wrap(~Area, ncol = 1) +
+  scale_fill_manual(values = c("blue", "red")) +
+  theme_bw() +
+  labs(x = "Длина карапакса (мм)", y = "Частота", fill = "Акватория")
+
+
+ggplot(Crang_2024, aes(x = L_Car, y = W, color = Area)) +
+  geom_point() +
+  scale_color_manual(values = c("blue", "red"))+
+  theme_bw()+
+  labs(x = "Длина карапакса (мм)", y = "Частота", fill = "Акватория")
 
