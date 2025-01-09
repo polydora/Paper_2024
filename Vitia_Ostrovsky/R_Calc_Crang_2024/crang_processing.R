@@ -35,7 +35,8 @@ mds_points$Area <- crang$Area
 
 ggplot(mds_points, aes(NMDS1, NMDS2, color=Area)) +
   geom_point(size = 4)+
-  theme_bw()
+  theme_bw()+
+  labs(x = "", y = "")
 
 
 
@@ -103,7 +104,8 @@ ggplot(diverse, aes(x = H_com, y = Spec_Num))+
 ggplot(diverse, aes(x = H_com, y = Empty))+
   geom_point(aes(color = Area))+ 
   geom_smooth(method = "lm")+ 
-theme_bw()  
+theme_bw()+
+  labs(x = "Разнообразие сообщества", y = "Пустые")  
 
 ggplot(diverse, aes(x = H_com, y = H_crang))+
   geom_point(aes(color = Area))+
