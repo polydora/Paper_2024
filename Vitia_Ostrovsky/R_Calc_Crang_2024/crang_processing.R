@@ -36,7 +36,8 @@ mds_points$Area <- crang$Area
 ggplot(mds_points, aes(NMDS1, NMDS2, color=Area)) +
   geom_point(size = 4)+
   theme_bw()+
-  labs(x = "", y = "")
+  scale_color_manual(values = c("blue", "red"))+
+  labs(x = "MDS1", y = "MDS2", color = "Акватория")
 
 
 
@@ -64,7 +65,8 @@ mds_points_comm$Area <-comm$Area
 
 ggplot(mds_points_comm, aes(  NMDS1, NMDS2,t, color = Area)) +
   geom_point(size = 4)+
-  theme_bw()
+  theme_bw()+
+  scale_color_manual(values = c("blue", "red"))
 ################
 
 crang %>% 
@@ -105,6 +107,7 @@ ggplot(diverse, aes(x = H_com, y = Empty))+
   geom_point(aes(color = Area))+ 
   geom_smooth(method = "lm")+ 
 theme_bw()+
+  scale_color_manual(values = c("blue", "red"))+
   labs(x = "Разнообразие сообщества", y = "Пустые")  
 
 ggplot(diverse, aes(x = H_com, y = H_crang))+
@@ -143,6 +146,7 @@ dendr_crang <- as.dendrogram(hclust(d = crang_dist, method = "ward.D" ))
 plot(dendr_crang)
 
 library(dendextend)
+
 
 
 tanglegram(dendr_comm, dendr_crang, sort = TRUE)
