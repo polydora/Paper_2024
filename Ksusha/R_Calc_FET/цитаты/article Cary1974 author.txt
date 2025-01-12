@@ -1,9 +1,0 @@
-@article{Cary1974,
-  author = {Cary, G. K.},
-  title = {The Ecological Niche: An Overview},
-  journal = {Annual Review of Ecology and Systematics},
-  volume = {5},
-  pages = {121--139},
-  year = {1974},
-  publisher = {Annual Reviews},
-}
