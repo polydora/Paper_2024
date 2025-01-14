@@ -31,50 +31,6 @@ library(multcomp)
 library(tidyverse)
 ```
 
-```{r}
-pel <- read_excel("Tables/Pelets_2024.xlsx")
-
-lit <- read_excel("Tables/Pelets_2024.xlsx", sheet = "ОБилие литторин на уровнях")
-
-lit_long <-
-melt(data = lit, id.vars = c("Date", "Description", "Site", "Sampling_Level", "Real_H", "Sample"), variable.name = "Species", value.name = "N")
-
-Mod <- gam(log(N+1) ~ s(Real_H, bs = "cr", by = Species, k = 7) + Species, data = lit_long)
-```
-
-```{r}
-pel %>%  
-  filter(Type == "Caged") -> pel_caged
-
-lit$Site <- factor(lit$Site)
-
-pel_caged$Experiment <- factor(pel_caged$Experiment)
-pel_caged$Species <- factor(pel_caged$Species)
-pel_caged$Substrate <- factor(pel_caged$Substrate)
-
-Mod_pel <- lme(log(Pell+1) ~ Species * Substrate, random =  ~ 1|Experiment,  data = pel_caged)
-
-pel_caged$Interact <- interaction(pel_caged$Species, pel_caged$Substrate)
-
-Mod_interact <- lme(log(Pell+1) ~ -1 + Interact, random = ~ 1|Experiment,  data = pel_caged)
-
-tukey_compar <- summary(glht(Mod_interact,linfct =  mcp(Interact = "Tukey")))
-
-My_data <- expand.grid(Species = unique(pel_caged$Species), Substrate = unique(pel_caged$Substrate))
-
-predicted <- predict(Mod_pel, newdata = My_data, level = 0)
-
-X <- model.matrix(~ Species * Substrate, data = My_data)
-  
-SE <- sqrt(diag(X %*% vcov(Mod_pel) %*% t(X)))
-  
-My_data$Fit <- exp(predicted) - 1
-
-My_data$Lwr <- exp(predicted - 1.96*SE) - 1
-
-My_data$Upr <- exp(predicted + 1.96*SE) - 1
-```
-
 # Эколого-биологический центр “Крестовский остров”
 
 # Лаборатория Экологии Морского Бентоса
@@ -108,11 +64,10 @@ My_data$Upr <- exp(predicted + 1.96*SE) - 1
 
   Экологическая ниша - это многомерное пространство, формируемое условиями и ресурсами, которые обеспечивают существование видов. Весь многомерный объем, которы определяет условия окружающей среды, при которых вид может выживать и размножаться называется фундаментальной или физиологической нишей. Многомерный объем который данный вид занимает в действительности, измененный в результате взаимодействия с другими видами, называется реализованной нишей (@smith2012elements, @hutchinson1957concluding).
   
-  Способы изменения
-  
-  , влияя на то, как виды сосуществуют и разделяются, используя различные ресурсы и условия окружающей среды для снижения конкуренции (@reyes2024all). Дифференциация на специфические ниши включает пространственную, трофическую, временную и/или их комбинацию (@guo2012separation).
-  У пресноводных улиток рода *Tylomelania* адаптивная радиация, вероятно, способствовала трофическая специализация через диверсификацию их ключевого кормового органа - радулы (@hilgers2022evolutionary).   
-  Так в работе Гуо @guo2012separation, было показано, на примере бычков *Rhinogobius cliffordpopei* и *Rhinogobius giurius*, разделение экологических ниш двумя схожими вида в пространстве, времени и пищевых объектах. 
+  Особенно сильно экологическая ниша может измениться при взаимодействии двух видов с очень похожей фундаментальной нишей (@guo2012separation).
+(@maltseva2021linking)
+(@reyes2024all)
+(@hilgers2022evolutionary).   
   Понимание как похожие между собой виды разделяют свои экологические ниши, имеет решающее значение для понимания эволюционных процессов, приспособляемости видов к разнообразным условиям среды и механизмов, определяющих биоразнообразие. Это позволяет разрабатывать стратегии сохранения и прогнозировать реакцию на изменения окружающей среды в экосистемах (@cooper2024ecological).
   
   В данном исследование изучалось разделение экологических ниш между двумя вида моллюсков: *L.saxatilis* (далее саксатилис) и *L.obtusata* (далее обтузата). Понимание различий в экологических нишах между *L.saxatilis* и *L.obtusata* очень важно, поскольку оно показывает, как экологическая диверсификация смягчает межвидовую конкуренцию, способствует эффективной эксплуатации ресурсов и вносит вклад в процесс экологического видообразования в симпатрических популяциях (@maltseva2021linking). Целью данной работы было оценить расхождение ареалов обитания *Littorina saxatilis* и *Littorina obtusata* и установить возможные причины такого разделения. В задачи исследования входило: определить, как в зависимости от высоты меняется процентное соотношение этих двух видов моллюсков и какие могут быть причины такого разделения экологических ниш.
@@ -146,13 +101,55 @@ My_data$Upr <- exp(predicted + 1.96*SE) - 1
   
 ## Статистическая обработка
 
-  Все расчеты проводились с использованием функций языка статистического программирования R 4.4.2 (R Core Team, 2024). В качестве порогового значения отвержения нулевой гипоетзы использовался уровень значимости α=0,05.
+  Все расчеты проводились с использованием функций языка статистического программирования R 4.4.2 (R Core Team, 2024). В качестве порогового значения отвержения нулевой гипотезы использовался уровень значимости α=0,05.
   
-  В качестве зависимой переменной при анализ вертикального распределения видов мы использовали логарифм численности моллюсков в данной пробе. В качестве предиктора использовалось значение высоты над нулем глубин. Поскольку, визуально, вертикальное распределеине видов носило нелинейный характер для построения модели была выбрана техника аддитивных обобщенных моделей (GAM, +++). Подбор парамтеров модели осуществляли с помощью пакета mgcv (+++). 
+  В качестве зависимой переменной при анализ вертикального распределения видов мы использовали логарифм численности моллюсков в данной пробе. В качестве предиктора использовалось значение высоты над нулем глубин. Поскольку, визуально, вертикальное распределение видов носило нелинейный характер для построения модели была выбрана техника аддитивных обобщенных моделей (GAM, +++). Подбор парамтеров модели осуществляли с помощью пакета mgcv (+++). 
   
   В качестве зависимой переменной в статистическом анализе количества фекалий, выделяемых в естественных условиях мы использовали количество пеллет выделенных моллюсками. Предикторами в этом анализе были вид моллюска и тип субстрата с которого был собран моллюск. 
   
-  В качестве зависимой переменной в статистическом анализе экспериментального изучение влияния типа субстрата на выделение пелет мы использовали колличество пеллет. В качестве изменяемой переменной мы использовали тип субстрата, виды  моллюска. Из-за плоховидимых различий в колличестве пеллет в качестве случайного фактора был взят так же номер повторности. 
+  В качестве зависимой переменной в статистическом анализе экспериментального изучение влияния типа субстрата на выделение пелет мы использовали количество пеллет. В качестве изменяемой переменной мы использовали тип субстрата, виды  моллюска. Из-за плохо видимых различий в колличестве пеллет в качестве случайного фактора был взят так же номер повторности. 
+  
+```{r}
+pel <- read_excel("Tables/Pelets_2024.xlsx")
+
+lit <- read_excel("Tables/Pelets_2024.xlsx", sheet = "ОБилие литторин на уровнях")
+
+lit_long <-
+melt(data = lit, id.vars = c("Date", "Description", "Site", "Sampling_Level", "Real_H", "Sample"), variable.name = "Species", value.name = "N")
+
+Mod <- gam(log(N+1) ~ s(Real_H, bs = "cr", by = Species, k = 7) + Species, data = lit_long)
+
+pel %>%  
+  filter(Type == "Caged") -> pel_caged
+
+lit$Site <- factor(lit$Site)
+
+pel_caged$Experiment <- factor(pel_caged$Experiment)
+pel_caged$Species <- factor(pel_caged$Species)
+pel_caged$Substrate <- factor(pel_caged$Substrate)
+
+Mod_pel <- lme(log(Pell+1) ~ Species * Substrate, random =  ~ 1|Experiment,  data = pel_caged)
+
+pel_caged$Interact <- interaction(pel_caged$Species, pel_caged$Substrate)
+
+Mod_interact <- lme(log(Pell+1) ~ -1 + Interact, random = ~ 1|Experiment,  data = pel_caged)
+
+tukey_compar <- summary(glht(Mod_interact,linfct =  mcp(Interact = "Tukey")))
+
+My_data <- expand.grid(Species = unique(pel_caged$Species), Substrate = unique(pel_caged$Substrate))
+
+predicted <- predict(Mod_pel, newdata = My_data, level = 0)
+
+X <- model.matrix(~ Species * Substrate, data = My_data)
+  
+SE <- sqrt(diag(X %*% vcov(Mod_pel) %*% t(X)))
+  
+My_data$Fit <- exp(predicted) - 1
+
+My_data$Lwr <- exp(predicted - 1.96*SE) - 1
+
+My_data$Upr <- exp(predicted + 1.96*SE) - 1
+```  
   
 # Результаты
 
@@ -214,7 +211,7 @@ ggplot(My_data, aes(x = Substrate, y = Fit, fill = Species)) +
   geom_signif(y_position = c(21, 21), xmin = 0.75, xmax = 1.25, annotations = "p<0.001", tip_length = 0) +
   geom_signif(y_position = c(23, 23), xmin = 0.75, xmax = 1.75, annotations = "p = 0.003", tip_length = 0) +
   geom_signif(y_position = c(25, 25), xmin = 0.75, xmax = 2.25, annotations = "p = 0.004", tip_length = 0) +
-  labs(x = "Субстрат", fill = "Вид", y = "Колличество пеллет (экспонента)")
+  labs(x = "Субстрат", fill = "Вид", y = "Колличество пеллет")
 ```
   +++
 
