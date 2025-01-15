@@ -3,12 +3,57 @@ library(vegan)
 library(dplyr)
 library(ggplot2)
 library(patchwork)
+library(reshape2)
 
 Crang_2024 <- read_excel("Data/Crang_2024.xlsx", na = "NA")
 
 
+# Создаем таблицу для сравнения двух рационов
 
+Crang_2024 %>% 
+  select(-c( Lon, Lat, Site,  Sample, ID, W, L_Car)) %>% 
+  melt(id.vars = "Area") %>% 
+  group_by(variable, Area) %>% 
+  summarise(Prop = round(mean(value), 3)) %>% 
+  dcast(variable ~ Area) -> Crangon_diet 
+  
+write.table(Crangon_diet, "clipboard", sep = "\t", row.names = F, dec = ",")
+
+names(Crangon_diet) <- c("Item", "Jouzh", "Sev")
+
+ggplot(Crangon_diet, aes(Jouzh, Sev)) +
+  geom_point() +
+  geom_abline()
+
+
+read_excel("Data/Crang_2024.xlsx", sheet = "Чистовые")%>% 
+  select(-c(ID, Site))%>% 
+  melt(id.vars = c("Area", "Cluster")) %>% 
+  group_by(Cluster, variable)%>%
+  summarise(N_mean = round(mean(value), 1)) %>% 
+  dcast(variable ~ Cluster) %>% 
+  write.table("clipboard", dec = ",", sep = "\t", row.names = F)
+
+read_excel("Data/Crang_2024.xlsx", sheet = "Full")%>% 
+  select(-c(Lon, Lat, Site,  Sample, ID, W, L_Car))%>% 
+  melt(id.vars = c("Area", "Cluster")) %>% 
+  group_by(Cluster, variable)%>%
+  summarise(N_mean = round(mean(value), 1)) %>% 
+  dcast(variable ~ Cluster) %>% 
+  write.table("clipboard", dec = ",", sep = "\t", row.names = F)
+
+  
+  
+
+
+
+
+  
 str(Crang_2024)
+
+
+
+
 
 
 
