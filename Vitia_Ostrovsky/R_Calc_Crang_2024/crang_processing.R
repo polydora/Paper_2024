@@ -34,9 +34,20 @@ read_excel("Data/Crang_2024.xlsx", sheet = "Чистовые")%>%
   dcast(variable ~ Cluster) %>% 
   write.table("clipboard", dec = ",", sep = "\t", row.names = F)
 
+read_excel("Data/Crang_2024.xlsx", sheet = "Full")%>% 
+  select(-c(Lon, Lat, Site,  Sample, ID, W, L_Car))%>% 
+  melt(id.vars = c("Area", "Cluster")) %>% 
+  group_by(Cluster, variable)%>%
+  summarise(N_mean = round(mean(value), 1)) %>% 
+  dcast(variable ~ Cluster) %>% 
+  write.table("clipboard", dec = ",", sep = "\t", row.names = F)
+
   
   
-  
+
+
+
+
   
 str(Crang_2024)
 
