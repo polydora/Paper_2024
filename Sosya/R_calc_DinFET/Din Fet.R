@@ -20,6 +20,14 @@ ggplot(data = dinfet, aes(x = (Branch), y = log(Force), color = F_Sp)) +
   facet_wrap(~Morphotype) + 
   geom_smooth(method = "lm")
 
+
+ggplot(data = dinfet, aes(x = factor(Branch), y = log(Force), fill = F_Sp)) + 
+  geom_boxplot() + 
+  facet_wrap(~Morphotype) 
+
+
+
+
 Mod <- lm(log(Force) ~ Branch * Morphotype * F_Sp, data = dinfet)
 
 drop1(Mod, test = "F")
