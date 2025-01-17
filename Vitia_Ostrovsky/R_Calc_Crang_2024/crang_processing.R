@@ -111,7 +111,8 @@ mds_points_comm$Area <-comm$Area
 ggplot(mds_points_comm, aes(  NMDS1, NMDS2,t, color = Area)) +
   geom_point(size = 4)+
   theme_bw()+
-  scale_color_manual(values = c("blue", "red"))
+  scale_color_manual(values = c("blue", "red"))+
+labs(x = "MDS1", y = "MDS2", color = "Акватория")
 ################
 
 crang %>% 
@@ -144,7 +145,7 @@ ggplot(diverse, aes(x = H_com, y = Spec_Num))+
   geom_point(aes(color = Area), size = 4)+ 
   geom_smooth(method = "lm") +
   scale_color_manual(values = c("blue", "red")) +
-  labs(x = "Разнообразие в сообществе", y = "Количество видов в питании")+ 
+  labs(x = "Разнообразие в сообществе", y = "Количество видов в питании", color ="Акватория")+ 
   theme_bw()
 
 
@@ -153,7 +154,7 @@ ggplot(diverse, aes(x = H_com, y = Empty))+
   geom_smooth(method = "lm")+ 
 theme_bw()+
   scale_color_manual(values = c("blue", "red"))+
-  labs(x = "Разнообразие сообщества", y = "Пустые")  
+  labs(x = "Разнообразие сообщества", y = "Пустые", color ="Акватория")  
 
 ggplot(diverse, aes(x = H_com, y = H_crang))+
   geom_point(aes(color = Area))+
