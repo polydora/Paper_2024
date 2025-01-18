@@ -67,12 +67,7 @@ Crang_2024 %>%
 
 ord_crang <- metaMDS(crang[ ,-c(1:2) ], distance = "bray")
 
-
-
 plot(ord_crang, type = "t")
-
-
-
 
 mds_points <- data.frame(scores(ord_crang)$sites)
 
