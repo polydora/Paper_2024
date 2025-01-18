@@ -20,9 +20,29 @@ ggplot(data = dinfet, aes(x = (Branch), y = log(Force), color = F_Sp)) +
   facet_wrap(~Morphotype) + 
   geom_smooth(method = "lm")
 
-Mod <- lm(log(Force) ~ Branch * Morphotype * F_Sp, data = dinfet)
 
-drop1(Mod, test = "F")
+
+ggplot(data = dinfet, aes(x = (Branch), y = log(Mussel_Weight), color = F_Sp)) + 
+  geom_point() + 
+  facet_wrap(~Morphotype) + 
+  geom_smooth(method = "lm")
+
+
+
+Mod_L <- lm(L ~ Branch * Morphotype * F_Sp, data = dinfet)
+summary(Mod_L)
+
+
+
+Mod <- lm(log(Force) ~ Branch * Morphotype * F_Sp + Mussel_Weight, data = dinfet)
+
+anova(Mod)
+
+summary(Mod)
+
+
+
+`drop1(Mod, test = "F")
 
 
 Mod2 <- update(Mod, .~.- Branch:Morphotype:F_Sp)
