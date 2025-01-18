@@ -4,6 +4,7 @@ output:
   word_document:
     reference_docx: style_for_RMD.docx
 bibliography: bibliography.bib
+csl: marine-biology.csl
 ---
 
 ```{r setup, include=FALSE}
