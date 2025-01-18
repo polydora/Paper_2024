@@ -5,7 +5,7 @@ library(ggplot2)
 library(patchwork)
 library(reshape2)
 
-Crang_2024 <- read_excel("Data/Crang_2024.xlsx", na = "NA")
+Crang_2024 <- read_excel("Data/Crang_2024.xlsx", na = "NA", sheet = "Full")
 
 
 # Создаем таблицу для сравнения двух рационов
