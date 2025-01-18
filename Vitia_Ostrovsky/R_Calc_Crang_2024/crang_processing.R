@@ -113,4 +113,5 @@ ggplot(diverse, aes(x = comm_total_N, y = Spec_Num))+
 
 
 
-round(vegdist(comm[,-c(1:2)]), 2)
+round(vegdist(comm[,-c(1:2)], method = "euclidean"), 0)
+ 
