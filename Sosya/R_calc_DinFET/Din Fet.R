@@ -40,7 +40,36 @@ anova(Mod)
 
 summary(Mod)
 
+library(dplyr)
 
+dinfet %>% 
+  group_by(F_Sp, Morphotype) %>% 
+  do(data.frame(Branch = seq(min(.$Branch), max(.$Branch), 1))) %>% 
+  mutate(Mussel_Weight = mean(dinfet$Mussel_Weight)) -> My_data
+  
+
+predicted <- predict(Mod, newdata = My_data, se.fit = TRUE)
+
+My_data$Fit <- predicted$fit
+My_data$SE <- predicted$se.fit
+My_data$Upr <- My_data$Fit + 1.96*My_data$SE 
+My_data$Low <- My_data$Fit - 1.96*My_data$SE
+
+
+
+ggplot(My_data, aes(x = Branch, y = Fit)) + 
+  geom_ribbon(aes(ymin = Low, ymax = Upr, fill = F_Sp), alpha = 0.3) +
+  geom_line(aes(color = F_Sp), size = 1) +
+  facet_wrap(~Morphotype) +
+  scale_color_manual(values = c("red", "blue") )+
+  theme_bw() +
+  geom_point(data = dinfet, aes(y = log(Force), color = F_Sp)) + 
+  labs(x = "Номер развилки", y = "Логарифм силы прикрепления")
+
+
+
+
+############################
 
 `drop1(Mod, test = "F")
 
