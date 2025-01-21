@@ -44,7 +44,7 @@ theme_set(theme_bw())
 
 # О. Беляева
 
-# Совместная жизнь двух видов беломорских мидий (+++) делает их более уязвимым для хищников (Asterias reubens ++++)
+# Совместная жизнь двух видов беломорских мидий (*Mytilus edulis* Linnaeus, 1758 и *Mytilus trossulus* A. Gould, 1850) делает их более уязвимым для хищников (Asterias rubens Linnaeus, 1758)
 
  
 
