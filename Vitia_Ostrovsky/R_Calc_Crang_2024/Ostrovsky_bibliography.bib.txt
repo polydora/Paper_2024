@@ -1,0 +1,171 @@
+@article{pompozzi2022livestock,
+  title={{Livestock systems preserving natural grasslands are biodiversity reservoirs that promote spidersв conservation}},
+  author={Pompozzi, Gabriel and de Santiago, Fernanda and Blumetto, Oscar and Sim{\'o}, Miguel},
+  journal={Journal of Insect Conservation},
+  volume={26},
+  number={3},
+  pages={453--462},
+  year={2022},
+  publisher={Springer}
+}
+
+@article{korpimaki2020difference,
+  title={{The difference between generalist and specialist: The effects of wide fluctuations in main food abundance on numbers and reproduction of two co-existing predators}},
+  author={Korpim{\"a}ki, Erkki and Hongisto, Kari and Masoero, Giulia and Laaksonen, Toni},
+  journal={Journal of Avian Biology},
+  volume={51},
+  number={8},
+  year={2020},
+  publisher={Wiley Online Library}
+}
+
+@article{descamps2017climate,
+  title={{Climate change impacts on wildlife in a High Arctic archipelago--Svalbard, Norway}},
+  author={Descamps, S{\'e}bastien and Aars, Jon and Fuglei, Eva and Kovacs, Kit M and Lydersen, Christian and Pavlova, Olga and Pedersen, {\AA}shild {\O} and Ravolainen, Virve and Str{\o}m, Hallvard},
+  journal={Global Change Biology},
+  volume={23},
+  number={2},
+  pages={490--502},
+  year={2017},
+  publisher={Wiley Online Library}
+}
+
+@article{dikaeva2020distribution,
+  title={{Distribution of polychaeta communities in the western and northern part of the Barents Sea}},
+  author={Dikaeva, Dinara and Frolova, Elena},
+  journal={KnE Life Sciences},
+  pages={44--50},
+  year={2020}
+}
+
+@article{negoescu1997anthurideans,
+  title={{Anthurideans (Crustacea, Isopoda) from the North Atlantic and the Arctic Ocean}},
+  author={Negoescu, Ileana and Svavarsson, Jorundur},
+  journal={Sarsia},
+  volume={82},
+  number={3},
+  pages={159--202},
+  year={1997},
+  publisher={Taylor \& Francis}
+}
+
+@article{Aristov2011,
+  title={{Рацион хищного моллюска Amauropsis islandica Muller, 1776 Caenogastropoda: Naticidae на беломорской литорали}},
+  author={Аристов, Дмитрий Алексеевич and Гранович, Андрей Игоревич},
+  journal={Biological Communications},
+  number={4},
+  pages={10--18},
+  year={2011},
+  publisher={Федеральное государственное бюджетное образовательное учреждение высшего~…}
+}
+
+@article{KamenivaSpb,
+  title={{Многолетние изменения структуры популяции и рациона питания приапулид Priapulus caudatus в Илистой губе о. Горелого (Лувеньгский архипелаг, Кандалакшский залив Белого моря). Работа депонирована в библиотеке Лаборатории эколоии морского бетоса (гидробиологии)}},
+  author={Каменева, М},
+year={2005}
+}
+
+@article{PyzichenkoEco,
+  title={{Брюхоногий моллюск Hydrobia ulvae (Pennant, 1777) как вспомогательный источник питания хищных моллюсков Amauropsis islandica (Muller, 1776) (Gastropoda: Naticidae) на литорали Белого моря. Работа депонирована в библиотеке Лаборатории эколоии морского бетоса (гидробиологии)}},
+  author={Пузаченко, Георгий},
+year={2012}
+
+}
+
+}
+
+@article{ChistikovaEco,
+  title={{Изучение интенсивности и предпочтений в питании Amauropsis islandica. Работа депонирована в библиотеке Лаборатории эколоии морского бетоса (гидробиологии)}},
+  author={Чистякова, Ирена},
+year={2008}
+
+}
+
+
+@article{luttikhuizen2008phylogeography,
+  title={{Phylogeography of the common shrimp, Crangon crangon (L.) across its distribution range.}},
+  author={Luttikhuizen, Pieternella C and Campos, Joana and van Bleijswijk, Judith and Peijnenburg, Katja TCA and van der Veer, Henk W},
+  journal={Molecular Phylogenetics and Evolution},
+  volume={46},
+  number={3},
+  pages={1015--1030},
+  year={2008},
+  publisher={Elsevier}
+}
+
+@book{Kyznicov1964,
+  title={{Биология массовых и наиболее обычных видов ракообразных Баренцева и Белого моря.}},
+  author={Кузнецов, Владимир Васильевич},
+  year={1964},
+  publisher={Наука. Ленингр. отд-ние}
+}
+
+@book{Naymov1981zoo,
+  title={{Зоологические экскурсии на Белом море: Пособие для летней учебной практики по зоологии беспозвоночных.}},
+  author={Наумов, Андрей Донатович and Оленев, Анатолий Викторович},
+  year={1981},
+  publisher={ЛГУ}
+}
+
+@phdthesis{ByrycovskiyFeedeng,
+  title={{О питании креветки Crangon crangon в Кандалакшском заливе Белого моря.}},
+  author={Буруковский, РН and Трунова, АВ},
+  year={2006},
+  school={Изд-во ВНИРО}
+}
+
+@article{brind2005multiscale,
+  title={{Multiscale spatial distribution of a littoral fish community in relation to environmental variables.}},
+  author={Brind'Amour, Anik and Boisclair, Daniel and Legendre, Pierre and Borcard, Daniel},
+  journal={Limnology and Oceanography},
+  volume={50},
+  number={2},
+  pages={465--479},
+  year={2005},
+  publisher={Wiley Online Library}
+}
+
+@misc{simpson2022package,
+  title={{Package ‘permute’}},
+  author={Simpson, Gavin L and Team, R Core and Bates, Douglas M and Oksanen, Jari and Simpson, Maintainer Gavin L},
+  year={2022}
+}
+
+@article{oksanen2022vegan,
+  title={{vegan: Community Ecology Package. Ordination methods, diversity analysis and other functions for community and vegetation ecologists}},
+  author={Oksanen, J and Blanchet, FG and Friendly, M and Kindt, R and Legendre, P and Mcglinn, D and Minchin, PR and O'Hara, RB and Simpson, GL and Solymos, P and others},
+  year={2022}
+}
+
+@article{galili2015dendextend,
+  title={{dendextend: an R package for visualizing, adjusting and comparing trees of hierarchical clustering}},
+  author={Galili, Tal},
+  journal={Bioinformatics},
+  volume={31},
+  number={22},
+  pages={3718--3720},
+  year={2015},
+  publisher={Oxford University Press}
+}
+
+@article{OstrovskiyEco,
+  title={{Зависимость изменчивости рациона питания от возраста у креветок Crangon crangon (Linnaeus, 1758) на литорали Южной губы о. Ряжков (Кандалакшский залив Белого моря). Работа депонирована в библиотеке Лаборатории эколоии морского бетоса (гидробиологии) }},
+  author={Островский, Виктор},
+year={2024}
+}
+
+@article{OstrovskiyEco2022,
+  title={{Распределение и питание креветок Crangon crangon (Linnaeus, 1758)на литорали Южной губы о. Ряжкова (Кандалакшский заливБелогоморя).Работа депонирована в библиотеке Лаборатории эколоии морского бетоса (гидробиологии)}} 
+  author={Островский, Виктор},
+year={2022}
+}
+
+@article{Kolosov2005,
+  title={{Питание песчаной креветки Crangon crangon на литорали южной губы острова Ряжкова ( Кандалакшский залив, Белое море).Работа депонирована в библиотеке Лаборатории эколоии морского бетоса (гидробиологии)}}
+  author={Колов, Евгений}, 
+year={2005}
+
+}
+
+
+
