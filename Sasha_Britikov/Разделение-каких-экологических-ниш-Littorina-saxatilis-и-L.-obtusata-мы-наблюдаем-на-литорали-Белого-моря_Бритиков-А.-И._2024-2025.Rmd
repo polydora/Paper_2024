@@ -4,7 +4,7 @@ output:
   word_document:
     reference_docx: style_for_RMD.docx
 bibliography: bibliography.bib
-csl: derjugin_style.csl
+csl: "derjugin_style.csl"
 ---
 
 ```{r setup, include=FALSE}
