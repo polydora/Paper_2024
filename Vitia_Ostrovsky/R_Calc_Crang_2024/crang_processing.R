@@ -110,6 +110,9 @@ ggplot(mds_points_comm, aes(  NMDS1, NMDS2,t, color = Area)) +
 labs(x = "MDS1", y = "MDS2", color = "Акватория")
 ################
 
+
+
+
 crang %>% 
   select(Area,Site,Empty) ->
   diverse
