@@ -19,6 +19,7 @@ library(patchwork)
 library(reshape2)
 library(cowplot)
 library(dendextend)
+library(ggmap)
 Crang_2024 <- read_excel("Data/Crang_2024.xlsx", na = "NA", sheet = "Full")
 ```
 
@@ -38,9 +39,9 @@ Crang_2024 <- read_excel("Data/Crang_2024.xlsx", na = "NA", sheet = "Full")
 
  
 
-# К. Федорова
+# В. Островский
 
-# Характеристика смешанных поселений беломоских мидий на литоральных фукоидах
+# *Crangon crangon* (Linnaeus, 1758) специалист или генералист ?
 
  
 
@@ -158,7 +159,7 @@ ggmap(Ryazh_map) +
 
 ```{r, fig.cap="Рисунок 1. Карта района сбора материала (А) о. Ряжков,  (B) Северная губа и (С) Южная губа. Точками обозначены участки, где были отловлены креветки. В тех же точках были взяты пробы бентоса. "}
 
-plot_grid(Pl_Ryazh, Pl_Sev, Pl_Youzh, nrow = 1, labels = "AUTO")
+plot_grid(Pl_Ryazh, Pl_Sev, Pl_Youzh, nrow = 1, labels = "AUTO", scale = c(0.9, 1, 1.2))
 
 ```
 
