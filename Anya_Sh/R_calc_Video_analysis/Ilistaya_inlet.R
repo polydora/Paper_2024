@@ -33,12 +33,32 @@ complete.cases(video)
 
 names(video_full)
 
+theme_set(theme_bw())
+
+###### Карта с распределением стандартных станций и точек видеосъемки
+
+Pl_Ilist <-
+ggplot(data = shore, aes(x = E, y = N)) +
+  geom_path(aes( linetype = depth), linewidth = 1) + 
+  theme(panel.grid = element_blank(), axis.text = element_blank(), axis.ticks = element_blank(), axis.title = element_blank()) +
+  guides(linetype = "none") +
+  scale_linetype_manual(values = c(2, 1))
 
 
+Pl_Ilist +
+  geom_point(data = piles3, aes(y = N.x, x = E.x), shape = 3) +
+  geom_point(data = piles3, aes(y = N.y, x = E.y), shape = 3) +
+  geom_point(data = standard_stations, aes(y = N, x = E), color = "red", size = 5) +
+  geom_point(data = video_full, aes(y = N, x = E), shape = 21, color = "black", fill = "yellow", size = 2)
+  
+
+  
+
+######################
 
 video_full %>% 
-  select(Stattion, N, E,Laminaria) %>% 
-  group_by(Stattion) %>% 
+  select(Station, N, E,Laminaria) %>% 
+  group_by(Station) %>% 
   summarise(N = mean(N), E = mean(E), Laminaria = mean(Laminaria)) %>% 
   filter(Laminaria !=0)-> df 
 
@@ -49,8 +69,8 @@ ggplot(data = shore, aes(x = E, y = N)) +
   guides(color = "none", size = "none")
 
 video_full %>% 
-  select(Stattion, N, E,Fucus) %>% 
-  group_by(Stattion) %>% 
+  select(Station, N, E,Fucus) %>% 
+  group_by(Station) %>% 
   summarise(N = mean(N), E = mean(E), Fucus = mean(Fucus)) %>% 
   filter(Fucus !=0)-> df
 ggplot(data = shore, aes(x = E, y = N)) +
