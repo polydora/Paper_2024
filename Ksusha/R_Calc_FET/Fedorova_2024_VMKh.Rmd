@@ -212,7 +212,7 @@ kable(Mod_Dens_E_parametric,
 ```{r}
 kable(Mod_Dens_E_smooth[,-3], 
       digits = c(NA, 2, 1, 4),
-      caption = "Таблица 2 (продолжение). Сглаживающие функции.",
+      caption = "Таблица 1 (продолжение). Сглаживающие функции.",
       col.names = c("Член модели", "edf", "F-критерий", "p-value"))
 ```
 
@@ -224,7 +224,7 @@ Mod_Dens_T_parametric <- tidy(Mod_Dens_T, parametric = T)
 
 Mod_Dens_T_smooth <- tidy(Mod_Dens_T, parametric = F)
 
-kable(Mod_Dens_E_parametric, 
+kable(Mod_Dens_T_parametric, 
       digits = c(NA, 2, 3, 1, 4),
       col.names = c("Член модели", "Оценка параметра", "Стандартная ошибка", "t-критерий", "p-value"), 
       caption = "Таблица 2. Параметры модели, описвающей связь плотности поселения мидий T-морфотипа с изученными факторами. \nПараметрическая часть модели." )
@@ -233,7 +233,7 @@ kable(Mod_Dens_E_parametric,
 
 ```{r}
 
-kable(Mod_Dens_E_smooth[,-3],
+kable(Mod_Dens_T_smooth[,-3],
       digits = c(NA, 2, 1, 4),
       caption = "Таблица 2 (продолжение). Сглаживающие функции.",
       col.names = c("Член модели", "edf", "F-критерий", "p-value"))
