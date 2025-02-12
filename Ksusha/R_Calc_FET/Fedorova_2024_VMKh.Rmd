@@ -202,6 +202,11 @@ Mod_Dens_E_parametric <- tidy(Mod_Dens_E, parametric = T)
 
 Mod_Dens_E_smooth <- tidy(Mod_Dens_E, parametric = F)
 
+Mod_Dens_E_parametric[2, 1] <- "F. vesiculosus"
+
+Mod_Dens_E_smooth[1, 1] <- "Прибойность на A. nodosum"
+Mod_Dens_E_smooth[2, 1] <- "Прибойность на F. vesiculosus"
+
 kable(Mod_Dens_E_parametric, 
       digits = c(NA, 2, 3, 1, 4),
       col.names = c("Член модели", "Оценка параметра", "Стандартная ошибка", "t-критерий", "p-value"), 
@@ -222,7 +227,12 @@ Mod_Dens_T <- gam(Dens_T ~ s(log(fetch), by = Fucoid, k = 4) + Fucoid, data = fe
 
 Mod_Dens_T_parametric <- tidy(Mod_Dens_T, parametric = T)
 
+Mod_Dens_T_parametric[2, 1] <- "F. vesiculosus"
+
 Mod_Dens_T_smooth <- tidy(Mod_Dens_T, parametric = F)
+
+Mod_Dens_T_smooth[1, 1] <- "Прибойность на A. nodosum"
+Mod_Dens_T_smooth[2, 1] <- "Прибойность на F. vesiculosus"
 
 kable(Mod_Dens_T_parametric, 
       digits = c(NA, 2, 3, 1, 4),
@@ -295,6 +305,14 @@ Mod_parametric <- tidy(Mod, parametric = T)
 
 Mod_smooth <- tidy(Mod, parametric = F)
 
+Mod_parametric[2, 1] <- "F. vesiculosus"
+
+Mod_smooth[1, 1] <- "Прибойность на A. nodosum"
+Mod_smooth[2, 1] <- "Прибойность на F. vesiculosus"
+
+Mod_smooth[3, 1] <- "Плотность поселения на A. nodosum"
+Mod_smooth[4, 1] <- "Плотность поселения на F. vesiculosus"
+
 kable(Mod_parametric, 
       digits = c(NA, 2, 3, 1, 4),
       col.names = c("Член модели", "Оценка параметра", "Стандартная ошибка", "t-критерий", "p-value"), 
@@ -303,7 +321,7 @@ kable(Mod_parametric,
 ```
 
 ```{r}
-kable(Mod_Dens_E_smooth[,-3],
+kable(Mod_smooth[,-3],
       digits = c(NA, 2, 1, 4),
       caption = "Таблица 3 (продолжение). Сглаживающие функции.",
       col.names = c("Член модели", "edf", "F-критерий", "p-value"))
