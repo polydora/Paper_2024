@@ -537,7 +537,7 @@ ggplot(diverse, aes(x = H_com, y = H_crang ))+
   geom_point(aes(color = Area), size = 2)+ 
   geom_smooth(method = "lm") +
   scale_color_manual(values = c("blue", "red")) +
-  labs(x = "Видовое разнообразие в сообществе (H) ", y = "Количество видов в питании", color ="Акватория")+   theme_bw()
+  labs(x = "Видовое разнообразие сообщества (H) ", y = "Видовое разнообразие рациона", color ="Акватория")+   theme_bw()
 ```
 
 
