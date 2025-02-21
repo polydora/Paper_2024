@@ -1,0 +1,35 @@
+---
+title: "Какое разделение экологических
+ниш Littorina saxatilis (Olivi, 1792) и Littorina
+obtusata (Linnaeus, 1758) мы наблюдаем на
+литорали Белого моря?"
+output: powerpoint_presentation
+date: "2025-02-2"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## О чем работа?
+
+![Место сбора материала для исследования](Figures/photo_from_satellite.png){width="10%"}
+
+## Slide with Bullets
+
+- Bullet 1
+- Bullet 2
+- Bullet 3
+
+## Slide with R Output
+
+```{r cars, echo = TRUE}
+summary(cars)
+```
+
+## Slide with Plot
+
+```{r pressure, fig.width=15, fig.height=45, screenshot.opts=list(delay=1)}
+plot(pressure)
+```
+
