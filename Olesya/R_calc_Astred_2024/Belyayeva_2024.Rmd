@@ -208,7 +208,9 @@ ggplot(cage_param, aes(x = Type, y = N)) +
 ```{r рисунок_биомасса_звезд, fig.cap= "Рисунок 4. Боксплоты, отражающие биомассу морских звезд в садках трех типов: Садки с преобладанием Е-морфотипа (80Е), с преобладанием Т-морфотипа (80Т) и садки смешанного типа (40Е и 40Т) " }
 
 ggplot(data = cage_param, aes(x = Type, y = B)) +
-  geom_boxplot()
+  geom_boxplot(aes(fill = Type)) +
+  guides(fill = "none") +
+  labs(x = "Тип садка", y = "Биомасса морских звезд")
 
 ```
 
@@ -219,7 +221,7 @@ ggplot(data = cage_param, aes(x = Type, y = B)) +
 ```{r рисунок_биомасса_зыезд_доля_мертвых, fig.cap= "Рисунок 5. Зависимость между долей съеденных моллюсков (Prop_T)  и биомассой морских звезд (B)." }
 
 ggplot(data = cage_param, aes(x = B, y = Prop_Dead)) +
-  geom_point()+
+  geom_point(aes(color = Type), size = 4)+
   labs(x = "Биомасса звезд", y = "Доля мертвых мидий")
 
 
@@ -254,9 +256,16 @@ kable(tidy(Mod_all1),
 #Картинка
 
 
-draw(Mod_all1, nrow = 1)
+Pl_1 <- draw(Mod_all1, select = c(1)) 
+
+Pl_2 <- draw(Mod_all1, select = c(2))
+
+Pl_3 <- draw(Mod_all1, select = c(3))
 
 
+library(cowplot)
+
+plot_grid(Pl_2, Pl_3, Pl_1, nrow = 1, labels = "AUTO")
 ```
 
  

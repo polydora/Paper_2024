@@ -352,34 +352,7 @@ display: none;
 </div>
 
 
-<div id="эколого-биологический-центр-крестовский-остров" class="section level1">
-<h1>Эколого-биологический центр “Крестовский остров”</h1>
-</div>
-<div id="лаборатория-экологии-морского-бентоса" class="section level1">
-<h1>Лаборатория Экологии Морского Бентоса</h1>
-</div>
-<div id="гидробиологии" class="section level1">
-<h1>(гидробиологии)</h1>
-<p> </p>
-<p><img role="img" src="data:image/jpeg;base64,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" /></p>
-<p> </p>
-</div>
-<div id="с.-беляева" class="section level1">
-<h1>С. Беляева</h1>
-</div>
-<div id="сила-прикрепления-mytilus-trossulus-и-mytilus-edulis-поселяющихся-на-ascophyllum-nodosum-и-fucus-vesiculosus-на-литорали-белого-моря" class="section level1">
-<h1>Сила прикрепления Mytilus trossulus и Mytilus edulis, поселяющихся
-на Ascophyllum nodosum и Fucus vesiculosus на литорали Белого моря</h1>
-<p> </p>
-</div>
-<div id="санкт-петербург" class="section level1">
-<h1>Санкт-Петербург</h1>
-</div>
-<div id="section" class="section level1">
-<h1>2024</h1>
-<div style="page-break-after: always;"></div>
-<div id="у-mytilus-sp.-которые-живут-на-фукоидах-есть-много-плюсов-например-защита.-однако-fucus-vesiculosus-не-нравится-это-и-он-всячески-пытается-избавится-от-паразита-данный-фукоид-начал-выделять-метаболиты-благодаря-которым-мидии-морфатипа-e-и-морфатипа-t-начали-избегать-прикрепления-ближе-к-концу-фукуса-так-как-чем-выше-развилка-тем-она-моложе-а-чем-развилка-моложе-тем-сильнее-она-выделяет-метаболиты.-однако-ascophyllum-nodosum-никак-не-реагирует-на-прикрепление-на-него-мидий.-было-проведено-измерение-силы-прикрепление-по-которому-построили-графики-благодаря-которым-видна-значимое-различие-силы-прикрепления-мидий-на-конце-таллома-растения-и-ближе-к-основанию-водоросли." class="section level6">
-<h6>У <em>Mytilus Sp</em>., которые живут на фукоидах есть много плюсов,
+<p>У <em>Mytilus</em>, которые живут на фукоидах есть много плюсов,
 например, защита. Однако <em>Fucus vesiculosus</em> не нравится это, и
 он всячески пытается избавится от паразита, данный фукоид начал выделять
 метаболиты, благодаря которым мидии морфатипа-E и морфатипа-T начали
@@ -389,24 +362,24 @@ display: none;
 прикрепление на него мидий. Было проведено измерение силы прикрепление,
 по которому построили графики, благодаря которым видна значимое различие
 силы прикрепления мидий на конце таллома растения и ближе к основанию
-водоросли.</h6>
-</div>
-</div>
+водоросли.</p>
 <div id="введение" class="section level1">
 <h1>Введение</h1>
-<p>Среди разнообразных симфизиологических связей <span class="citation">[@beklem1970]</span> прямые топические взаимодействия
-играют самую важную роль. Эти взаимоотношения заключаются в том, что
-один из организмов положительно влияет на жизнь другого. Часто бывает,
-что тело организма одного вида предоставляет субстрат для прикрепления
-организмов другого вида. Например, к числу таких взаимодействий
-относятся формирование обрастатаний створок моллюсков <span class="citation">[@varigin2018biotic]</span> Такие формы сосуществования
-организмов разных видов обозначаются как <em>седвазиозы</em> <span class="citation">[@Naumov_Fedyakov]</span>. В таких системах поверхность
-тела морских животных или растений заселяется сидячими
+<p>Среди разнообразных симфизиологических связей (Беклемишев 1970)
+прямые топические взаимодействия играют самую важную роль. Эти
+взаимоотношения заключаются в том, что один из организмов положительно
+влияет на жизнь другого. Часто бывает, что тело организма одного вида
+предоставляет субстрат для прикрепления организмов другого вида.
+Например, к числу таких взаимодействий относятся формирование
+обрастатаний створок моллюсков (Varigin 2018). Такие формы
+сосуществования организмов разных видов обозначаются как
+<em>седвазиозы</em> (Наумов, Федяков, 1993). В таких системах
+поверхность тела морских животных или растений заселяется сидячими
 организмами-обрастателями, или консортами, которые не демонстрируют
 глубокой специализации к своему организму-субстрату (эдификатору
 консорции). Так, например, на мелководьях морские желуди из рода
 <em>Balanus</em> часто связаны с раковинами мидий, но также могут
-обитать и на поверхности камней <span class="citation">[@Naumov_Fedyakov]</span>.</p>
+обитать и на поверхности камней (Наумов, Федяков, 1993).</p>
 <p>Среди морских седвазиозов особое место занимают поселения мидий на
 литоральных макрофитах. Многочисленные исследования показали, что
 макрофиты не являются пассивным субстратом в этой системе, но активно
@@ -414,31 +387,31 @@ display: none;
 выгодны так как водоросли предоставляют им дополнительный субстрат, что
 может приводить к снижению внутривидовой конкуренции моллюсков
 (Федорова, 2024), водоросли обеспечивают амортизацию при волновом
-воздействии <span class="citation">[@katolikova2016genetic]</span>, а
-также позволяют снизить вероятность атак со стороны хищников <span class="citation">[@khaitov2021species]</span>.</p>
+воздействии (Katolikova et al., 2016), а также позволяют снизить
+вероятность атак со стороны хищников (Khaitov et al, 2021).</p>
 <p>Если рассматривать влияние мидий на фукоиды, то для водорослей
 присутстиве консортов может носить отрицательный характер: обрастание
 мидиями снижает плавучесть талломов водорослей. Недавно было показано,
 что литоральные <em>F.vesiculosus</em> выделяют в воду некоторые
 метаболиты, которые способны практически полностью блокировать
-прикрепление мидий к субстрату <span class="citation">[@ershova2024]</span>. Второй вид беломорских фукоидов
-(<em>A.nodosum</em>) не оказывает такого воздействия на моллюсков <span class="citation">[@ershova2024]</span>. Это входит в некоторое
-противоречие с наблюдаемыми в природе закономерностями распределения
-мидий. Так было показано, что обилие мидий на двух видах упомянутых
-водорослей не отличается: оба вида беломорских мидий, как <em>Mytilus
-edulis</em>, так и <em>M.trossulus</em>, демонстрируют практически
-равные плотности поселения как на <em>F.vesiculosus</em>, так и на
-<em>A.nodosum</em> <span class="citation">[@Fedorova_2024,
-@Stolbovay_2005]</span>. То есть отрицательного влияния со стороны
-<em>F.vesiculosus</em> увидеть не удается. Однако известно, что фукоиды
-– это многолетние организмы <span class="citation">[@Kuznetsov1960]</span>. Продолжительность их жизни
-может достигать 12 лет. Рост фукоидов сопровождается образованием
-развилок: каждый год формируется новая дихотомия <span class="citation">[@Kuznetsov1960]</span>. Многолетний таллом, таким
-образом, представляется гетерогенным микробиотопом, в котором разные
-участки характеризуются разным возрастом. В связи с этим можно
-предположить, что более молодые участки фукоида выделяют описанные
-метаболиты, а старые участки фукуса их не секретируют или их выделение
-ослаблено.</p>
+прикрепление мидий к субстрату (Ершова, 2023). Второй вид беломорских
+фукоидов (<em>A.nodosum</em>) не оказывает такого воздействия на
+моллюсков (Ершова, 2023). Это входит в некоторое противоречие с
+наблюдаемыми в природе закономерностями распределения мидий. Так было
+показано, что обилие мидий на двух видах упомянутых водорослей не
+отличается: оба вида беломорских мидий, как <em>Mytilus edulis</em>, так
+и <em>M.trossulus</em>, демонстрируют практически равные плотности
+поселения как на <em>F.vesiculosus</em>, так и на <em>A.nodosum</em>
+(Федорова, 2024, Столбовая, 2005). То есть отрицательного влияния со
+стороны <em>F.vesiculosus</em> увидеть не удается. Однако известно, что
+фукоиды – это многолетние организмы (Кузнецов, 1960). Продолжительность
+их жизни может достигать 12 лет. Рост фукоидов сопровождается
+образованием развилок: каждый год формируется новая дихотомия (Кузнецов,
+1960). Многолетний таллом, таким образом, представляется гетерогенным
+микробиотопом, в котором разные участки характеризуются разным
+возрастом. В связи с этим можно предположить, что более молодые участки
+фукоида выделяют описанные метаболиты, а старые участки фукуса их не
+секретируют или их выделение ослаблено.</p>
 <p>Целью данной работы было оценить, насколько сила прикрепления
 <em>Mytilus edulis</em> и <em>Mytilus trossulus</em> зависит от
 возрастных характеристик фукоидов, к которым они прикрепляются. В рамках
@@ -475,10 +448,10 @@ A – остров Ряжков, две точки сбора пробы: кут
 подсчитать количество развилок, идущих от точки его крепления к грунту
 до того места, где были обнаружены мидии (Рис. 2, A). Эти развилки
 появляются на апикальной части слоевища каждый год и могут трактоваться,
-как маркеры возраста <span class="citation">[@Kuznetsov1960]</span>: чем
-выше развилка от основания фукуса, тем моложе эта часть фукоида. Для
-каждой, включенной в анализ, мидии мы определяли сколько развилок
-отделяет ее положение от точки крепления фукоида к субстрату.</p>
+как маркеры возраста (Кузнецов, 1960): чем выше развилка от основания
+фукуса, тем моложе эта часть фукоида. Для каждой, включенной в анализ,
+мидии мы определяли сколько развилок отделяет ее положение от точки
+крепления фукоида к субстрату.</p>
 <p>Описанная выше работа производилась только с теми моллюсками, длина
 раковины которых превышала 10 мм. Далее к таким мидиям мы прикрепляли
 зажим-крокодильчик (Рис. 2, C), который присоединяли к динамометру
@@ -503,7 +476,7 @@ A – остров Ряжков, две точки сбора пробы: кут
 <div id="идентификация-мидий-по-морфотипу" class="section level2">
 <h2>Идентификация мидий по морфотипу</h2>
 <p>В данной работе мы разделили мидий на две группы, которые
-соответствуют двум морфотипам <span class="citation">[@khaitov2021species]</span>. Эти морфотипы
+соответствуют двум морфотипам (Khaitov et al. 2021). Эти морфотипы
 определяются характером развития перламутрового слоя в районе лигамента
 (Рис. 3, A). У мидий T-морфотипа перламутровый слой в районе лигамента
 недоразвит и там прослеживается, полоска неприкрытого призматического
@@ -518,8 +491,9 @@ A – остров Ряжков, две точки сбора пробы: кут
 идентификации мидий. A – лигамент у мидии; B – морфотипы мидий.</div>
 </div>
 </div>
-<div id="статистическая-обработка." class="section level2">
-<h2>Статистическая обработка.</h2>
+</div>
+<div id="статистическая-обработка." class="section level1">
+<h1>Статистическая обработка.</h1>
 <p>Мы провели регрессионный анализ, в котором зависимой переменной была
 сила прикрепления мидии (использовали логарифмированное значение, чтобы
 не нарушались условия применения регрессионного анализа). В качестве
@@ -530,8 +504,8 @@ A – остров Ряжков, две точки сбора пробы: кут
 Кроме того, поскольку очевидно, что сила прикрепления может зависеть от
 размера мидии, мы в анализ включили в качестве ковариаты, также, вес
 мидии («Mussel_Weight»). Обработка и визуализация результатов
-производилась с помощью языка статистического программирования R <span class="citation">[@RCoreTeam]</span>.</p>
-</div>
+производилась с помощью языка статистического программирования R (R Core
+Team 2023).</p>
 </div>
 <div id="результаты-и-обсуждение" class="section level1">
 <h1>Результаты и обсуждение</h1>
@@ -540,319 +514,6 @@ A – остров Ряжков, две точки сбора пробы: кут
 номером 22. При этом чаще всего моллюски были отмечены на 3-5 развилках.
 Больше всего развилок мы наблюдали на талломах <em>A.nodosum</em>
 (Таблица 1).</p>
-<table>
-<caption>Таблица 1. Количество особей разных видов мидий, отмеченных на
-разных развилках двух видов фукоидов.</caption>
-<colgroup>
-<col width="11%" />
-<col width="19%" />
-<col width="22%" />
-<col width="21%" />
-<col width="24%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="right">Номер развилки</th>
-<th align="right"><em>M.edulis</em> на <em>A.nodosum</em></th>
-<th align="right"><em>M.edulis</em> на <em>F.vesiculosus</em></th>
-<th align="right"><em>M.trossulus</em> на <em>A.nodosum</em></th>
-<th align="right"><em>M.trossulus</em> на <em>F.vesiculosus</em></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">1</td>
-<td align="right">8</td>
-<td align="right">7</td>
-<td align="right">7</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="right">2</td>
-<td align="right">4</td>
-<td align="right">5</td>
-<td align="right">9</td>
-<td align="right">4</td>
-</tr>
-<tr class="odd">
-<td align="right">3</td>
-<td align="right">8</td>
-<td align="right">11</td>
-<td align="right">6</td>
-<td align="right">3</td>
-</tr>
-<tr class="even">
-<td align="right">4</td>
-<td align="right">8</td>
-<td align="right">19</td>
-<td align="right">11</td>
-<td align="right">19</td>
-</tr>
-<tr class="odd">
-<td align="right">5</td>
-<td align="right">4</td>
-<td align="right">16</td>
-<td align="right">6</td>
-<td align="right">9</td>
-</tr>
-<tr class="even">
-<td align="right">6</td>
-<td align="right">4</td>
-<td align="right">6</td>
-<td align="right">6</td>
-<td align="right">11</td>
-</tr>
-<tr class="odd">
-<td align="right">7</td>
-<td align="right">6</td>
-<td align="right">5</td>
-<td align="right">10</td>
-<td align="right">5</td>
-</tr>
-<tr class="even">
-<td align="right">8</td>
-<td align="right">7</td>
-<td align="right">4</td>
-<td align="right">8</td>
-<td align="right">8</td>
-</tr>
-<tr class="odd">
-<td align="right">9</td>
-<td align="right">2</td>
-<td align="right">6</td>
-<td align="right">4</td>
-<td align="right">5</td>
-</tr>
-<tr class="even">
-<td align="right">10</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
-<td align="right">2</td>
-</tr>
-<tr class="odd">
-<td align="right">11</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">5</td>
-<td align="right">1</td>
-</tr>
-<tr class="even">
-<td align="right">12</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">4</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="right">13</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">7</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">14</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="right">15</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">6</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">17</td>
-<td align="right">2</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">18</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">7</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">19</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">20</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-<tr class="even">
-<td align="right">21</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">0</td>
-</tr>
-<tr class="odd">
-<td align="right">22</td>
-<td align="right">3</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">0</td>
-</tr>
-</tbody>
-</table>
-<p>Регрессионный анализ показал, что наблюдаются статистически значимые
-связи силы прикрепления с изученными предикторами (Таблица 2). Можно
-заметить, что наблюдается значимая положительная связь силы прикрепления
-с весом мидии. То есть более крупные мидии прикрепляются сильнее.</p>
-<p>Для поставленной в работе цели наиболее важным оказывается значимое
-взаимодействие вида фукоидов с номером ветвления. Это говорит о том, что
-характер связи силы прикрепления с номером ветвления оказывается разным
-для разных видов фукоидов. Для более детального анализа связей
-необходимо рассмотреть ход линий регрессии, которые предсказывает эта
-модель.</p>
-<table>
-<caption>Таблица 2. Результаты регрессионного анализа связи между силой
-прикрепления с номером ветвления (Branch), морфотипом (Morphotype),
-видом фукоида (F_Sp) и весом (Mussel_Weight).</caption>
-<colgroup>
-<col width="38%" />
-<col width="17%" />
-<col width="19%" />
-<col width="11%" />
-<col width="8%" />
-<col width="4%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Член модели</th>
-<th align="right">Оценка параметра</th>
-<th align="right">Стандартная ошибка</th>
-<th align="right">t-критерий</th>
-<th align="right">P value</th>
-<th align="left"></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">-1.58</td>
-<td align="right">0.204</td>
-<td align="right">-7.78</td>
-<td align="right">0.0000</td>
-<td align="left">***</td>
-</tr>
-<tr class="even">
-<td align="left">Branch</td>
-<td align="right">0.04</td>
-<td align="right">0.021</td>
-<td align="right">1.70</td>
-<td align="right">0.0906</td>
-<td align="left">.</td>
-</tr>
-<tr class="odd">
-<td align="left">MorphotypeT</td>
-<td align="right">0.92</td>
-<td align="right">0.267</td>
-<td align="right">3.43</td>
-<td align="right">0.0007</td>
-<td align="left">***</td>
-</tr>
-<tr class="even">
-<td align="left">F_SpF.vesiculosus</td>
-<td align="right">1.30</td>
-<td align="right">0.307</td>
-<td align="right">4.22</td>
-<td align="right">0.0000</td>
-<td align="left">***</td>
-</tr>
-<tr class="odd">
-<td align="left">Mussel_Weight</td>
-<td align="right">0.93</td>
-<td align="right">0.144</td>
-<td align="right">6.44</td>
-<td align="right">0.0000</td>
-<td align="left">***</td>
-</tr>
-<tr class="even">
-<td align="left">Branch:MorphotypeT</td>
-<td align="right">-0.03</td>
-<td align="right">0.027</td>
-<td align="right">-1.06</td>
-<td align="right">0.2879</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">Branch:F_SpF.vesiculosus</td>
-<td align="right">-0.10</td>
-<td align="right">0.047</td>
-<td align="right">-2.18</td>
-<td align="right">0.0299</td>
-<td align="left">*</td>
-</tr>
-<tr class="even">
-<td align="left">MorphotypeT:F_SpF.vesiculosus</td>
-<td align="right">-0.57</td>
-<td align="right">0.453</td>
-<td align="right">-1.27</td>
-<td align="right">0.2064</td>
-<td align="left"></td>
-</tr>
-<tr class="odd">
-<td align="left">Branch:MorphotypeT:F_SpF.vesiculosus</td>
-<td align="right">-0.03</td>
-<td align="right">0.067</td>
-<td align="right">-0.48</td>
-<td align="right">0.6307</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<p>На рисунке ++ приведены линии регрессии, отражающие зависимость силы
-прикрепления мидий от номера развилки на фукоиде для двух групп мидий на
-разных видах фукоидов.</p>
-<p>Из данных, приведенных на этом рисунке, видно, что мидии, сидящие
-ближе к концу таллома (более высокий номер развилки)
-<em>F.vesiculosus</em> , прикрепляются слабее, а мидии, сидящие ближе к
-прикрепительному диску этого вида водоросли, прикрепляются сильнее.
-Такой характер связи демонстрируют как мидии E-морфотипа, так и мидии
-T-морфотипа. На другом виде фукоидов (<em>A.nodosum</em>) значимой связи
-силы прикрепления с номером ветвления не наблюдается ни для, E- ни для
-T-морфотипа.</p>
-<div class="figure">
-<img role="img" aria-label="Рисунок 4. Линии регрессии, отражающие связь между силой прикрепления мидии и номером развилки, на которой сидит мидия, для разных видов фукоидов и разных морфотипов мидий. Для построения линий регрессии значения веса мидий были взяты, как средние значения." src="data:image/png;base64,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" alt="Рисунок 4. Линии регрессии, отражающие связь между силой прикрепления мидии и номером развилки, на которой сидит мидия, для разных видов фукоидов и разных морфотипов мидий. Для построения линий регрессии значения веса мидий были взяты, как средние значения." width="672" />
-<p class="caption">
-Рисунок 4. Линии регрессии, отражающие связь между силой прикрепления
-мидии и номером развилки, на которой сидит мидия, для разных видов
-фукоидов и разных морфотипов мидий. Для построения линий регрессии
-значения веса мидий были взяты, как средние значения.
-</p>
-</div>
-<p>Таким образом, проведенное нами исследование показало, что номер
-развилки влияет на силу прикрепления мидии, но только в случае талломов
-<em>Fucus vesiculosus</em>. Мидии, которые крепятся в более молодых
-участках талломов, возможно испытывают отрицательное воздействие со
-стороны фукусов. Это хорошо согласуется с обнаруженной Т.Ершовой (2023)
-закономерностью: метаболиты <em>F.vesiculosus</em> ингибируют
-прикрепление мидий. Однако наши результаты позволяют ожидать, что в
-старой части таллома это воздействие ниже. Именно там и могут поселяться
-мидии. Что касается <em>Ascophyllum nodosum</em>, то на этом виде
-водорослей мидии располагаются по всей длине фукоида с одинаковой силой
-прикрепления. Именно такой паттерн и следовало бы ожидать, если
-<em>A.nodosum</em> не выделяет метаболитов, ингибирующих прикрепление
-мидий.</p>
-<p>Благодарности Хотелось бы выразить благодарность Вадиму Михайловичу
-Хайтову как научному руководителю, Кандалакшскому заповеднику за
-возможность работы и команде LIX Беломорской экспедиции за помощь
-разбора материала.</p>
 </div>
 
 
